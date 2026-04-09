@@ -1,0 +1,2 @@
+# ni-traffic-collision-analysis
+Northern Ireland traffic and the amount of collisions
