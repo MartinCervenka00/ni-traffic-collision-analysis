@@ -9,3 +9,7 @@ collisions = pd.read_csv("data/collisions_2024.csv")
 outline = gpd.read_file("data/NI_outline.shp")
 
 print("Data loaded")
+
+outline.plot()
+plt.title("Northern Ireland Outline")
+plt.show()
