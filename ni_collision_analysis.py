@@ -61,6 +61,8 @@ by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Save results to CSV file in the Output folder
-by_district.to_csv(OUTPUT_DIR / "collisions_by_district.csv")
+by_district.rename("collision_count").to_csv(
+    OUTPUT_DIR / "collisions_by_district.csv"
+)
 
-print("collisions_by_district.csv created")
+print("Collisions_by_district.csv created")
