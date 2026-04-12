@@ -13,9 +13,10 @@ CASUALTY_CSV = DATA_DIR / "casualties_2024.csv"
 VEHICLE_CSV = DATA_DIR / "vehicles_2024.csv"
 
 # Load shapefiles - NI outline, NI districts
-outline = gpd.read_file("data/NI_outline.shp")
+outline = gpd.read_file(DATA_DIR/"ni_outline.shp")
+districts = gpd.read_file(DATA_DIR/"ni_districts.shp")
 
-# Loading colision data from CSV into a pandas DataFrame
+# Loading collision data from CSV into a pandas DataFrame
 collisions = pd.read_csv(COLLISION_CSV)
 
 print("Data loaded")
@@ -29,12 +30,22 @@ collisions_gdf = gpd.GeoDataFrame(
 
 # Match crs to collision data
 outline = outline.to_crs(epsg=29901)
+districts = districts.to_crs(epsg=29901)
 
-# Area is being plotted for both ni outline and collision
+# Area is being plotted for both ni outline, districts and collision
 fig, ax = plt.subplots()
-outline.plot(ax=ax, color="white", edgecolor="black")
+outline.plot(ax=ax, facecolor="none", edgecolor="black")
+districts.plot(ax=ax, facecolor="none", edgecolor="blue")
 collisions_gdf.plot(ax=ax, color="red", markersize=1)
 
+# Adding legend to the map
+import matplotlib.patches as mpatches
+
+outline_patch = mpatches.Patch(edgecolor="black", facecolor="none", label="NI Outline")
+district_patch = mpatches.Patch(edgecolor="blue", facecolor="none", label="Districts")
+collision_patch = mpatches.Patch(color="red", label="Collisions")
+
+ax.legend(handles=[outline_patch, district_patch, collision_patch])
 
 plt.title("Road traffic collisions in Northern Ireland (2024)")
 plt.show()
