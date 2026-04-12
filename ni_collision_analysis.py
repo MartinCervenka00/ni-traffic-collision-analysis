@@ -49,3 +49,12 @@ ax.legend(handles=[outline_patch, district_patch, collision_patch])
 
 plt.title("Road traffic collisions in Northern Ireland (2024)")
 plt.show()
+print("Map created")
+
+# Creating spatial join - connect collisions to districts
+joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
+
+# Count collisions by district
+by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
+
+print(by_district)
