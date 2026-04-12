@@ -48,7 +48,15 @@ collision_patch = mpatches.Patch(color="red", label="Collisions")
 ax.legend(handles=[outline_patch, district_patch, collision_patch])
 
 plt.title("Road traffic collisions in Northern Ireland (2024)")
-plt.show()
+
+# Save image to output directory
+OUTPUT_DIR.mkdir(exist_ok=True)
+plt.savefig(OUTPUT_DIR / "collisions_map.png", dpi=300)
+
+#remove a hashtag from the next line if you want to see the map and add # to the next line
+#plt.show()
+plt.close()
+
 print("Map created")
 
 # Creating spatial join - connect collisions to districts
