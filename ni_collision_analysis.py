@@ -1,19 +1,24 @@
+from pathlib import Path
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
-# Load collision data
-collisions = pd.read_csv("data/collisions_2024.csv")
+# Create file paths
+DATA_DIR = Path("data")
+OUTPUT_DIR = Path("outputs")
 
-# Load NI outline
+# Uploading CSV RTC files - collision, casualty, vehicle
+COLLISION_CSV = DATA_DIR / "collisions_2024.csv"
+CASUALTY_CSV = DATA_DIR / "casualties_2024.csv"
+VEHICLE_CSV = DATA_DIR / "vehicles_2024.csv"
+
+# Load shapefiles - NI outline, NI districts
 outline = gpd.read_file("data/NI_outline.shp")
 
+# Loading colision data from CSV into a pandas DataFrame
+collisions = pd.read_csv(COLLISION_CSV)
+
 print("Data loaded")
-
-# Changing map to black line with width 1 with no face colour
-fig, ax = plt.subplots()
-outline.plot(ax=ax, facecolor="none", edgecolor="black", linewidth=1)
-
 
 # Creating collision points (TM65 Irish Grid - EPSG = 29901, where a_gd1 = Easting and a_gd2 = Northing)
 collisions_gdf = gpd.GeoDataFrame(
