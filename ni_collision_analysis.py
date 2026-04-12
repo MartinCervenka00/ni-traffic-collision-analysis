@@ -57,4 +57,10 @@ joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
 # Count collisions by district
 by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
 
-print(by_district)
+# Create outputs folder if it doesn't exist
+OUTPUT_DIR.mkdir(exist_ok=True)
+
+# Save results to CSV file in the Output folder
+by_district.to_csv(OUTPUT_DIR / "collisions_by_district.csv")
+
+print("collisions_by_district.csv created")
