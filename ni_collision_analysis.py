@@ -99,3 +99,10 @@ casualties = pd.read_csv(CASUALTY_CSV)
 
 # Casualties will be joined with collisions data
 collision_casualty = collisions.merge(casualties, on="a_ref", how="left")
+
+# Dataset is converted into a GeoDataFrame using Easting and Northing from collision
+casualties_gdf = gpd.GeoDataFrame(
+    collision_casualty,
+    geometry=gpd.points_from_xy(collision_casualty["a_gd1"], collision_casualty["a_gd2"]),
+    crs="EPSG:29901"
+)
