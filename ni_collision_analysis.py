@@ -92,7 +92,7 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 plt.savefig(OUTPUT_DIR / "collisions_graph.png", dpi=300)
 
 plt.close()
-print("Graph created")
+print("Collision graph created")
 
 # Next part will load casualties_2024.csv to the script
 casualties = pd.read_csv(CASUALTY_CSV)
@@ -106,3 +106,29 @@ casualties_gdf = gpd.GeoDataFrame(
     geometry=gpd.points_from_xy(collision_casualty["a_gd1"], collision_casualty["a_gd2"]),
     crs="EPSG:29901"
 )
+
+# Use spatial join to districts boundaries
+joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate="within")
+
+# Count casualties by district
+casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values(ascending=False)
+
+# Saving new data from casualties to .csv file into Output folder
+casualties_by_district.rename("casualty_count").to_csv(
+    OUTPUT_DIR / "casualties_by_district.csv"
+)
+
+print("Casualties_by_district.csv created")
+
+# Creating graph from casualties dataset
+plt.figure(figsize=(10, 6))
+casualties_by_district.sort_values().plot(kind="barh", color="green")
+plt.title("Casualties by District (2024)")
+plt.xlabel("Number of casualties")
+plt.ylabel("District")
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / "casualties_by_district.png", dpi=300)
+
+plt.close()
+
+print("Casualties graph created")
