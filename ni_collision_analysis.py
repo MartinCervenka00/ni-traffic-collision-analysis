@@ -74,3 +74,22 @@ by_district.rename("collision_count").to_csv(
 )
 
 print("Collisions_by_district.csv created")
+
+# Create graph for collisions in each district a save it to the Outputs folder as .png file
+plt.figure(figsize=(10, 6))
+
+by_district.sort_values().plot(kind="barh")
+
+plt.title("Number of Collisions by District (2024)")
+plt.xlabel("Collision Count")
+plt.ylabel("District")
+
+plt.grid(axis="x", linestyle="--", alpha=0.7)
+
+plt.tight_layout()
+
+OUTPUT_DIR.mkdir(exist_ok=True)
+plt.savefig(OUTPUT_DIR / "collisions_graph.png", dpi=300)
+
+plt.close()
+print("Graph created")
