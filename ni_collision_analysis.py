@@ -132,3 +132,7 @@ plt.savefig(OUTPUT_DIR / "casualties_by_district.png", dpi=300)
 plt.close()
 
 print("Casualties graph created")
+
+# Loading vehicles to the code (using Pandas library)
+vehicles=pd.read_csv(VEHICLE_CSV)
+
