@@ -93,3 +93,9 @@ plt.savefig(OUTPUT_DIR / "collisions_graph.png", dpi=300)
 
 plt.close()
 print("Graph created")
+
+# Next part will load casualties_2024.csv to the script
+casualties = pd.read_csv(CASUALTY_CSV)
+
+# Casualties will be joined with collisions data
+collision_casualty = collisions.merge(casualties, on="a_ref", how="left")
