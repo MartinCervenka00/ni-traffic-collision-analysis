@@ -79,17 +79,14 @@ print("Collisions_by_district.csv created")
 plt.figure(figsize=(10, 6))
 
 by_district.sort_values().plot(kind="barh")
-
 plt.title("Number of Collisions by District (2024)")
 plt.xlabel("Collision Count")
 plt.ylabel("District")
-
 plt.grid(axis="x", linestyle="--", alpha=0.7)
-
 plt.tight_layout()
 
 OUTPUT_DIR.mkdir(exist_ok=True)
-plt.savefig(OUTPUT_DIR / "collisions_graph.png", dpi=300)
+plt.savefig(OUTPUT_DIR / "collisions_by_districts_graph.png", dpi=300)
 
 plt.close()
 print("Collision graph created")
@@ -128,8 +125,10 @@ casualties_by_district.sort_values().plot(kind="barh", color="green")
 plt.title("Casualties by District (2024)")
 plt.xlabel("Number of casualties")
 plt.ylabel("District")
+plt.grid(axis="x", linestyle="--", alpha=0.7)
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / "casualties_by_district.png", dpi=300)
+
+plt.savefig(OUTPUT_DIR / "casualties_by_district_graph.png", dpi=300)
 
 plt.close()
 
@@ -172,7 +171,8 @@ plt.xlabel("Number of vehicles")
 plt.ylabel("District")
 plt.grid(axis="x", linestyle="--", alpha=0.7)
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / "vehicles_by_district.png", dpi=300)
+
+plt.savefig(OUTPUT_DIR / "vehicles_by_district_graph.png", dpi=300)
 
 plt.close()
 
