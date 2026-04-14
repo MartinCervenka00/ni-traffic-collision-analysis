@@ -7,6 +7,25 @@ import matplotlib.pyplot as plt
 DATA_DIR = Path("data")
 OUTPUT_DIR = Path("outputs")
 
+# Creating function for saving total numbers of collisions, casualties and vehicles to the new line in each .csv
+def save_with_total(series, output_path, column_name):
+    """
+    Saving collision, casualties and vehicle data per district to three new CSVs and add a total row at the end.
+    """
+
+    df = series.rename(column_name).reset_index()
+
+    total_value = df[column_name].sum()
+
+    total_row = pd.DataFrame({
+        df.columns[0]: ["TOTAL"],
+        column_name: [total_value]
+    })
+
+    df = pd.concat([df, total_row], ignore_index=True)
+
+    df.to_csv(output_path, index=False)
+
 # Uploading CSV RTC files - collision, casualty, vehicle
 COLLISION_CSV = DATA_DIR / "collisions_2024.csv"
 CASUALTY_CSV = DATA_DIR / "casualties_2024.csv"
@@ -69,8 +88,10 @@ by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Save results to CSV file in the Output folder
-by_district.rename("collision_count").to_csv(
-    OUTPUT_DIR / "collisions_by_district.csv"
+save_with_total(
+    by_district,
+    OUTPUT_DIR / "collisions_by_district.csv",
+    "collision_count"
 )
 
 print("Collisions_by_district.csv created")
@@ -113,8 +134,10 @@ joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate=
 casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Saving new data from casualties to .csv file into Output folder
-casualties_by_district.rename("casualty_count").to_csv(
-    OUTPUT_DIR / "casualties_by_district.csv"
+save_with_total(
+    casualties_by_district,
+    OUTPUT_DIR / "casualties_by_district.csv",
+    "casualties_count"
 )
 
 print("Casualties_by_district.csv created")
@@ -156,8 +179,10 @@ joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="wit
 vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Saving vehicle by district to new .csv file in Output folder
-vehicles_by_district.rename("vehicle_count").to_csv(
-    OUTPUT_DIR / "vehicles_by_district.csv"
+save_with_total(
+    vehicles_by_district,
+    OUTPUT_DIR / "vehicles_by_district.csv",
+    "vehicles_count"
 )
 
 print("Vehicles_by_district.csv created")

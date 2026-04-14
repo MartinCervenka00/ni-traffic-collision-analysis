@@ -1,4 +1,4 @@
-LGDNAME,casualty_count
+LGDNAME,casualties_count
 Belfast,1685
 "Armagh City, Banbridge and Craigavon",795
 "Newry, Mourne and Down",731
@@ -10,3 +10,4 @@ Antrim and Newtownabbey,537
 Causeway Coast and Glens,526
 Fermanagh and Omagh,438
 Mid and East Antrim,418
+TOTAL,7494

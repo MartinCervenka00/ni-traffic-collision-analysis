@@ -1,4 +1,4 @@
-LGDNAME,vehicle_count
+LGDNAME,vehicles_count
 Belfast,2056
 "Armagh City, Banbridge and Craigavon",952
 "Newry, Mourne and Down",832
@@ -10,3 +10,4 @@ Antrim and Newtownabbey,636
 Causeway Coast and Glens,601
 Fermanagh and Omagh,516
 Mid and East Antrim,503
+TOTAL,8822
