@@ -162,3 +162,18 @@ vehicles_by_district.rename("vehicle_count").to_csv(
 )
 
 print("Vehicles_by_district.csv created")
+
+# Create third graph for dataset - vehicle by district
+plt.figure(figsize=(10, 6))
+
+vehicles_by_district.sort_values().plot(kind="barh", color="orange")
+plt.title("Vehicles by District (2024)")
+plt.xlabel("Number of vehicles")
+plt.ylabel("District")
+plt.grid(axis="x", linestyle="--", alpha=0.7)
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / "vehicles_by_district.png", dpi=300)
+
+plt.close()
+
+print("Vehicles graph created")
