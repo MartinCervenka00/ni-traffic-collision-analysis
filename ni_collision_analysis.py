@@ -19,7 +19,7 @@ districts = gpd.read_file(DATA_DIR/"ni_districts.shp")
 # Loading collision data from CSV into a pandas DataFrame
 collisions = pd.read_csv(COLLISION_CSV)
 
-print("Data loaded")
+print("Collision data loaded")
 
 # Creating collision points (TM65 Irish Grid - EPSG = 29901, where a_gd1 = Easting and a_gd2 = Northing)
 collisions_gdf = gpd.GeoDataFrame(
@@ -97,6 +97,8 @@ print("Collision graph created")
 # Next part will load casualties_2024.csv to the script
 casualties = pd.read_csv(CASUALTY_CSV)
 
+print("Casualties data loaded")
+
 # Casualties will be joined with collisions data
 collision_casualty = collisions.merge(casualties, on="a_ref", how="left")
 
@@ -136,3 +138,7 @@ print("Casualties graph created")
 # Loading vehicles to the code (using Pandas library)
 vehicles=pd.read_csv(VEHICLE_CSV)
 
+print("Vehicles data loaded")
+
+# Joining vehicles dataset with collisions data
+collision_vehicle = collisions.merge(vehicles, on="a_ref", how="left")
