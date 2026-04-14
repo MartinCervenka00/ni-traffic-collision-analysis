@@ -149,3 +149,16 @@ vehicles_gdf = gpd.GeoDataFrame(
     geometry=gpd.points_from_xy(collision_vehicle["a_gd1"], collision_vehicle["a_gd2"]),
     crs="EPSG:29901"
 )
+
+# Using spatial join with districts shapefile
+joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
+
+# Count vehicles by district
+vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(ascending=False)
+
+# Saving vehicle by district to new .csv file in Output folder
+vehicles_by_district.rename("vehicle_count").to_csv(
+    OUTPUT_DIR / "vehicles_by_district.csv"
+)
+
+print("Vehicles_by_district.csv created")
