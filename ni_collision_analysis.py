@@ -142,3 +142,10 @@ print("Vehicles data loaded")
 
 # Joining vehicles dataset with collisions data
 collision_vehicle = collisions.merge(vehicles, on="a_ref", how="left")
+
+# Using GeoPandas to convert vehicle data into spatial points using Easting and Northing from collision dataset
+vehicles_gdf = gpd.GeoDataFrame(
+    collision_vehicle,
+    geometry=gpd.points_from_xy(collision_vehicle["a_gd1"], collision_vehicle["a_gd2"]),
+    crs="EPSG:29901"
+)
