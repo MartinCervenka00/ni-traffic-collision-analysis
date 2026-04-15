@@ -26,7 +26,7 @@ def save_with_total(series, output_path, column_name):
 
     df.to_csv(output_path, index=False)
 
-# Uploading CSV RTC files - collision, casualty, vehicle
+# File paths for collision, casualty and vehicle data
 COLLISION_CSV = DATA_DIR / "collisions_2024.csv"
 CASUALTY_CSV = DATA_DIR / "casualties_2024.csv"
 VEHICLE_CSV = DATA_DIR / "vehicles_2024.csv"
@@ -106,7 +106,6 @@ plt.ylabel("District")
 plt.grid(axis="x", linestyle="--", alpha=0.7)
 plt.tight_layout()
 
-OUTPUT_DIR.mkdir(exist_ok=True)
 plt.savefig(OUTPUT_DIR / "collisions_by_districts_graph.png", dpi=300)
 
 plt.close()
