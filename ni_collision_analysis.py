@@ -7,6 +7,23 @@ import matplotlib.pyplot as plt
 DATA_DIR = Path("data")
 OUTPUT_DIR = Path("outputs")
 
+# Select year for your analysis
+YEAR = 2024
+
+# Create function to create file paths for selected year
+def get_year_file_paths(data_dir, year):
+    """
+    Create file paths for collision, casualty and vehicle data for a selected year.
+    """
+    collision_csv = data_dir / f"collisions_{year}.csv"
+    casualty_csv = data_dir / f"casualties_{year}.csv"
+    vehicle_csv = data_dir / f"vehicles_{year}.csv"
+
+    return collision_csv, casualty_csv, vehicle_csv
+
+# File paths for collision, casualty and vehicle data - for selected year
+COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
+
 # Creating function for saving total numbers of collisions, casualties and vehicles to the new line in each .csv
 def save_with_total(series, output_path, column_name):
     """
@@ -26,10 +43,6 @@ def save_with_total(series, output_path, column_name):
 
     df.to_csv(output_path, index=False)
 
-# File paths for collision, casualty and vehicle data
-COLLISION_CSV = DATA_DIR / "collisions_2024.csv"
-CASUALTY_CSV = DATA_DIR / "casualties_2024.csv"
-VEHICLE_CSV = DATA_DIR / "vehicles_2024.csv"
 
 # Load shapefiles - NI outline, NI districts
 outline = gpd.read_file(DATA_DIR/"ni_outline.shp")
@@ -38,7 +51,7 @@ districts = gpd.read_file(DATA_DIR/"ni_districts.shp")
 # Loading collision data from CSV into a pandas DataFrame
 collisions = pd.read_csv(COLLISION_CSV)
 
-print("Collision data loaded")
+print(f"Collision data loaded {YEAR}")
 
 # Creating collision points (TM65 Irish Grid - EPSG = 29901, where a_gd1 = Easting and a_gd2 = Northing)
 collisions_gdf = gpd.GeoDataFrame(
@@ -66,17 +79,17 @@ collision_patch = mpatches.Patch(color="red", label="Collisions")
 
 ax.legend(handles=[outline_patch, district_patch, collision_patch])
 
-plt.title("Road traffic collisions in Northern Ireland (2024)")
+plt.title(f"Road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
 OUTPUT_DIR.mkdir(exist_ok=True)
-plt.savefig(OUTPUT_DIR / "collisions_map.png", dpi=300)
+plt.savefig(OUTPUT_DIR / f"collisions_map_{YEAR}.png", dpi=300)
 
 #remove a hashtag from the next line if you want to see the map and add # to the next line
 #plt.show()
 plt.close()
 
-print("Map created")
+print(f"Map created {YEAR}")
 
 # Creating spatial join - connect collisions to districts
 joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
@@ -90,11 +103,11 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 # Save results to CSV file in the Output folder
 save_with_total(
     by_district,
-    OUTPUT_DIR / "collisions_by_district.csv",
+    OUTPUT_DIR / f"collisions_by_district_{YEAR}.csv",
     "collision_count"
 )
 
-print("Collisions_by_district.csv created")
+print(f"Collisions_by_district_{YEAR}.csv created")
 
 # Create graph for collisions in each district a save it to the Outputs folder as .png file
 plt.figure(figsize=(10, 6))
@@ -106,15 +119,15 @@ plt.ylabel("District")
 plt.grid(axis="x", linestyle="--", alpha=0.7)
 plt.tight_layout()
 
-plt.savefig(OUTPUT_DIR / "collisions_by_districts_graph.png", dpi=300)
+plt.savefig(OUTPUT_DIR / f"collisions_by_districts_graph_{YEAR}.png", dpi=300)
 
 plt.close()
-print("Collision graph created")
+print(f"Collision graph created {YEAR}")
 
 # Next part will load casualties_2024.csv to the script
 casualties = pd.read_csv(CASUALTY_CSV)
 
-print("Casualties data loaded")
+print(f"Casualties data loaded {YEAR}")
 
 # Casualties will be joined with collisions data
 collision_casualty = collisions.merge(casualties, on="a_ref", how="left")
@@ -135,31 +148,31 @@ casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values
 # Saving new data from casualties to .csv file into Output folder
 save_with_total(
     casualties_by_district,
-    OUTPUT_DIR / "casualties_by_district.csv",
+    OUTPUT_DIR / f"casualties_by_district_{YEAR}.csv",
     "casualties_count"
 )
 
-print("Casualties_by_district.csv created")
+print(f"Casualties_by_district_{YEAR}.csv created")
 
 # Creating graph from casualties dataset
 plt.figure(figsize=(10, 6))
 casualties_by_district.sort_values().plot(kind="barh", color="green")
-plt.title("Casualties by District (2024)")
+plt.title(f"Casualties by District ({YEAR})")
 plt.xlabel("Number of casualties")
 plt.ylabel("District")
 plt.grid(axis="x", linestyle="--", alpha=0.7)
 plt.tight_layout()
 
-plt.savefig(OUTPUT_DIR / "casualties_by_district_graph.png", dpi=300)
+plt.savefig(OUTPUT_DIR / f"casualties_by_district_graph_{YEAR}.png", dpi=300)
 
 plt.close()
 
-print("Casualties graph created")
+print(f"Casualties graph created {YEAR}")
 
 # Loading vehicles to the code (using Pandas library)
 vehicles=pd.read_csv(VEHICLE_CSV)
 
-print("Vehicles data loaded")
+print(f"Vehicles data loaded {YEAR}")
 
 # Joining vehicles dataset with collisions data
 collision_vehicle = collisions.merge(vehicles, on="a_ref", how="left")
@@ -180,24 +193,24 @@ vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(asc
 # Saving vehicle by district to new .csv file in Output folder
 save_with_total(
     vehicles_by_district,
-    OUTPUT_DIR / "vehicles_by_district.csv",
+    OUTPUT_DIR / f"vehicles_by_district_{YEAR}.csv",
     "vehicles_count"
 )
 
-print("Vehicles_by_district.csv created")
+print(f"Vehicles_by_district_{YEAR}.csv created")
 
 # Create third graph for dataset - vehicle by district
 plt.figure(figsize=(10, 6))
 
 vehicles_by_district.sort_values().plot(kind="barh", color="orange")
-plt.title("Vehicles by District (2024)")
+plt.title(f"Vehicles by District ({YEAR})")
 plt.xlabel("Number of vehicles")
 plt.ylabel("District")
 plt.grid(axis="x", linestyle="--", alpha=0.7)
 plt.tight_layout()
 
-plt.savefig(OUTPUT_DIR / "vehicles_by_district_graph.png", dpi=300)
+plt.savefig(OUTPUT_DIR / f"vehicles_by_district_graph_{YEAR}.png", dpi=300)
 
 plt.close()
 
-print("Vehicles graph created")
+print(f"Vehicles graph created {YEAR}")
