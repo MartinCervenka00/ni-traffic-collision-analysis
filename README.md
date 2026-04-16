@@ -1,5 +1,7 @@
 # Northern Ireland Traffic Collision Analysis
 
+---
+
 ## Overview
 This project analyses police-recorded injury road traffic collisions in Northern Ireland.
 
@@ -12,6 +14,10 @@ The script:
 - saves outputs as CSV and PNG files
 
 The script can be used for any available year from **2013** to **2024**.
+
+---
+## Instalation
+
 
 ---
 
@@ -59,7 +65,7 @@ Place them in the **data** folder:
 
 - ni_outline.shp
 - ni_districts.shp
-
+------
 
 ## Select the Year
 
@@ -75,10 +81,25 @@ The script will automatically load:
 - casualty2024.csv
 - vehicle2024.csv
 
+---
 
+## Run the Script
+
+---
+
+## Outputs
+
+---
+
+## Troubleshooting
 
 If successful, the terminal should show:
 
 ```text
 Process finished with exit code 0
 ```
+
+---
+## Author
+
+Martin Cervenka
