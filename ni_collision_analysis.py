@@ -15,9 +15,9 @@ def get_year_file_paths(data_dir, year):
     """
     Create file paths for collision, casualty and vehicle data for a selected year.
     """
-    collision_csv = data_dir / f"collisions_{year}.csv"
-    casualty_csv = data_dir / f"casualties_{year}.csv"
-    vehicle_csv = data_dir / f"vehicles_{year}.csv"
+    collision_csv = data_dir / f"collision{year}.csv"
+    casualty_csv = data_dir / f"casualty{year}.csv"
+    vehicle_csv = data_dir / f"vehicle{year}.csv"
 
     return collision_csv, casualty_csv, vehicle_csv
 
