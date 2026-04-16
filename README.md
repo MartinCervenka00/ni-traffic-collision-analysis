@@ -74,3 +74,11 @@ The script will automatically load:
 - collision2024.csv
 - casualty2024.csv
 - vehicle2024.csv
+
+
+
+If successful, the terminal should show:
+
+```text
+Process finished with exit code 0
+```
