@@ -6,7 +6,7 @@ This project analyses police-recorded injury road traffic collisions in Northern
 
 The script:
 - loads collision, casualty and vehicle CSV files
-- creates spatial points from collision coordinates
+- create spatial points data from collision coordinates
 - loads Northern Ireland outline and district shapefiles
 - joins data to district boundaries
 - creates maps, graphs and summary tables
@@ -46,7 +46,7 @@ Example for 2024:
 Save all downloaded CSV files inside the project **data** folder.
 
 
-## Boundary Files Needed
+## Boundary Files
 
 Go to the Open Data NI website and download these shapefiles:
 
@@ -59,42 +59,71 @@ Place them in the **data** folder:
 - ni_outline.shp
 - ni_districts.shp
 
-## Instalation
+## Installation
 
+Create an environment:
+```python
+conda env create -f environment.yml
+conda activate ni-collisions
+```
+## Run the Script in PyCharm
+1. Open PyCharm
+2. Select **Open Project** and choose the project folder:
+    - `ni-traffic-collision-analysis`
+3. Make sure the correct interpreter is selected:
+   - `File > Settings > Python Interpreter`
 
-## Select the Year
+4. Choose the conda environment:
+   - `ni-collisions`
 
-At the top of the Python script (ni_collision_analysis.py), change:
+5. In the Project panel, open:
+   - `ni_collision_analysis.py`
+   
+6. Change the year in the script if required:
 
 ```python
 YEAR = 2024
 ```
-
 The script will automatically load:
-
 - collision2024.csv
 - casualty2024.csv
 - vehicle2024.csv
 
----
+7. Click the green Run button in the top-right corner of PyCharm.
 
-## Run the Script
 
----
+8. If successful, the terminal should show:
 
-## Outputs
-
----
-
-## Troubleshooting
-
-If successful, the terminal should show:
 
 ```text
 Process finished with exit code 0
 ```
 
----
+
+## Outputs
+Results are saved in the **Outputs** folder.
+
+These include:
+
+- collision map
+- collisions by district CSV
+- collisions by district graph
+- casualties by district CSV
+- casualties by district graph
+- vehicles by district CSV
+- vehicles by district graph
+
+Each CSV file includes a final TOTAL row.
+
+
+## Notes
+
+- Coordinate system used: **TM65 / Irish Grid (EPSG:29901)**
+- Collision points are created from:
+  - `a_gd1` = Easting
+  - `a_gd2` = Northing
+
+
 ## Author
 
 Martin Cervenka
