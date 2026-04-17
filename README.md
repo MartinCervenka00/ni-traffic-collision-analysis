@@ -1,6 +1,5 @@
 # Northern Ireland Traffic Collision Analysis
 
----
 
 ## Overview
 This project analyses police-recorded injury road traffic collisions in Northern Ireland.
@@ -15,11 +14,6 @@ The script:
 
 The script can be used for any available year from **2013** to **2024**.
 
----
-## Instalation
-
-
----
 
 ## Data Download
 
@@ -51,7 +45,6 @@ Example for 2024:
 
 Save all downloaded CSV files inside the project **data** folder.
 
----
 
 ## Boundary Files Needed
 
@@ -65,7 +58,9 @@ Place them in the **data** folder:
 
 - ni_outline.shp
 - ni_districts.shp
-------
+
+## Instalation
+
 
 ## Select the Year
 
