@@ -34,7 +34,15 @@ COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
 # Creating function for saving total numbers of collisions, casualties and vehicles to the new line in each .csv
 def save_with_total(series, output_path, column_name):
     """
-    Saving collision, casualties and vehicle data per district to three new CSVs and add a total row at the end.
+    Save district totals to a CSV file and add a final row showing the overall total.
+
+    Parameters:
+    - series: grouped results such as collisions, casualties or vehicles by district
+    - output_path: location where the CSV file will be saved
+    - column_name: name of the results column in the CSV file
+
+    Returns:
+    - saves a new CSV file with a TOTAL row at the end
     """
 
     df = series.rename(column_name).reset_index()
