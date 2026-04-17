@@ -14,6 +14,13 @@ YEAR = 2024
 def get_year_file_paths(data_dir, year):
     """
     Create file paths for collision, casualty and vehicle data for a selected year.
+
+    Parameters:
+    - data_dir: folder where the data files are stored
+    - year: year of the dataset to use
+
+    Returns:
+    - paths for collision, casualty and vehicle CSV files
     """
     collision_csv = data_dir / f"collision{year}.csv"
     casualty_csv = data_dir / f"casualty{year}.csv"
