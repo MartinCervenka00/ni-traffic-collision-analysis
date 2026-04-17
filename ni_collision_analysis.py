@@ -78,7 +78,8 @@ district_patch = mpatches.Patch(edgecolor="blue", facecolor="none", label="Distr
 collision_patch = mpatches.Patch(color="red", label="Collisions")
 
 ax.legend(handles=[outline_patch, district_patch, collision_patch],
-          loc="upper left"
+          loc="upper left",
+          bbox_to_anchor=(0.01, 0.99)
 )
 
 plt.title(f"Road traffic collisions in Northern Ireland ({YEAR})")
