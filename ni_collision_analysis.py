@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 DATA_DIR = Path("data")
 OUTPUT_DIR = Path("outputs")
 
-# Select year for your analysis----------------------------CHANGE YOUR YEAR HERE!!!!!!!!!!!!!!->
-YEAR = 2024
+# Select year for your analysis
+YEAR = 2023
 
 # Create function to create file paths for selected year
 def get_year_file_paths(data_dir, year):
