@@ -234,3 +234,46 @@ plt.savefig(OUTPUT_DIR / f"{YEAR}_GRAPH_vehicles_by_district.png", dpi=300)
 plt.close()
 
 print(f"{YEAR} GRAPH Vehicles created ")
+
+# Collision Severity Analysis
+
+# Table with districts and columns with severity types
+severity_table = (
+    joined.groupby(["LGDNAME", "a_type"])
+    .size()
+    .unstack(fill_value=0)
+)
+
+# Rename the severity columns
+severity_table = severity_table.rename(columns={
+    1: "fatal",
+    2: "serious",
+    3: "slight"
+})
+
+# If one category is missing
+for col in ["fatal", "serious", "slight"]:
+    if col not in severity_table.columns:
+        severity_table[col] = 0
+
+# Add total collisions
+severity_table["total"] = (
+    severity_table["fatal"] +
+    severity_table["serious"] +
+    severity_table["slight"]
+)
+
+# calculate percentage
+severity_table["fatal_percentage"] = severity_table["fatal"] / severity_table["total"] * 100
+severity_table["serious_percentage"] = severity_table["serious"] / severity_table["total"] * 100
+severity_table["slight_percentage"] = severity_table["slight"] / severity_table["total"] * 100
+
+# calculate ratio
+severity_table["serious_to_slight_ratio"] = severity_table["serious"] / severity_table["slight"]
+
+# avoid division by zero:
+severity_table["serious_to_slight_ratio"] = severity_table["serious"] / severity_table["slight"].replace(0, pd.NA)
+
+# save to csv
+severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_severity_by_district.csv")
+print(f"{YEAR} TABLE severity_by_district.csv created")
