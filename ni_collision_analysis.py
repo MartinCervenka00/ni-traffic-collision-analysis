@@ -277,3 +277,19 @@ severity_table["serious_to_slight_ratio"] = severity_table["serious"] / severity
 # save to csv
 severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_severity_by_district.csv")
 print(f"{YEAR} TABLE severity_by_district.csv created")
+
+# create bar chart - Collision Severity by District
+severity_table[["fatal", "serious", "slight"]].plot(
+    kind="bar",
+    stacked=True,
+    figsize=(12, 7)
+)
+
+plt.title(f"Collision Severity by District ({YEAR})")
+plt.xlabel("District")
+plt.ylabel("Number of collisions")
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / f"{YEAR}_severity_by_district.png", dpi=300)
+plt.close()
+
+print(f"{YEAR} GRAPH Severity created")
