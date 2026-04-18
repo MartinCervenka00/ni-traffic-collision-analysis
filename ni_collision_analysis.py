@@ -283,7 +283,7 @@ severity_table[["fatal", "serious", "slight"]].plot(
     kind="bar",
     stacked=True,
     figsize=(12, 7),
-    color=["red", "orange", "yellow"]
+    color=["red", "orange", "gold"]
 )
 
 plt.title(f"Collision Severity by District ({YEAR})")
