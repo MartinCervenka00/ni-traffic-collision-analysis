@@ -282,13 +282,18 @@ print(f"{YEAR} TABLE severity_by_district.csv created")
 severity_table[["fatal", "serious", "slight"]].plot(
     kind="bar",
     stacked=True,
-    figsize=(12, 7),
-    color=["red", "orange", "gold"]
+    figsize=(14, 8),
+    color=["red", "orange", "gold"],
+    edgecolor="black",
+    linewidth=0.8,
+    width=0.9
 )
 
 plt.title(f"Collision Severity by District ({YEAR})")
 plt.xlabel("District")
 plt.ylabel("Number of collisions")
+plt.legend(title="Severity")
+plt.grid(axis="y", linestyle="--", alpha=0.7)
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / f"{YEAR}_severity_by_district.png", dpi=300)
 plt.close()
