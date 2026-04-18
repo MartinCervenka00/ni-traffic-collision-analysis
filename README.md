@@ -112,6 +112,9 @@ These include:
 - casualties by district graph
 - vehicles by district CSV
 - vehicles by district graph
+- collision severity by district map
+- collision severity by district CSV
+- collision severity by district graph
 
 Each CSV file includes a final TOTAL row.
 
