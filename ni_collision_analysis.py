@@ -80,7 +80,7 @@ outline = outline.to_crs(epsg=29901)
 districts = districts.to_crs(epsg=29901)
 
 # Area is being plotted for both ni outline, districts and collision
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(10, 10))
 outline.plot(ax=ax, facecolor="none", edgecolor="black")
 districts.plot(ax=ax, facecolor="none", edgecolor="blue")
 collisions_gdf.plot(ax=ax, color="red", markersize=1)
@@ -103,7 +103,7 @@ ax.tick_params(axis="both", labelsize=8)
 ax.annotate(
     'N',
     xy=(0.92, 0.92),
-    xytext=(0.92, 0.82),
+    xytext=(0.92, 0.85),
     arrowprops=dict(facecolor='black', width=2, headwidth=8),
     ha='center',
     va='center',
@@ -118,7 +118,7 @@ plt.figtext(
     fontsize=8
 )
 
-plt.title(f"Road traffic collisions in Northern Ireland ({YEAR})")
+plt.title(f" Total road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
 OUTPUT_DIR.mkdir(exist_ok=True)
