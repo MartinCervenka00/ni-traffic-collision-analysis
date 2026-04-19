@@ -118,8 +118,8 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
 
 #remove a hashtag from the next line if you want to see the map and add # to the next line
-plt.show()
-#plt.close()
+#plt.show()
+plt.close()
 
 print(f"{YEAR} MAP created")
 
@@ -378,6 +378,13 @@ def create_fatal_choropleth(districts, severity_table, outline, output_dir, year
     # Add dashed grid
     plt.grid(axis="both", linestyle="--", alpha=0.4)
 
+    # Add source
+    plt.figtext(
+        0.1, 0.02,
+        "Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
+        fontsize=8
+    )
+
     # Save map
     plt.tight_layout()
     plt.savefig(
@@ -392,7 +399,7 @@ create_fatal_choropleth(
     OUTPUT_DIR,
     YEAR
 )
-#plt.show()
-plt.close()
+plt.show()
+#plt.close()
 
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
