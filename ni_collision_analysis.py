@@ -347,6 +347,18 @@ def create_fatal_choropleth(districts, severity_table, outline, output_dir, year
     # Plot NI outline on top
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
+    # Add North arrow
+    ax.annotate(
+        'N',
+        xy=(0.92, 0.92),
+        xytext=(0.92, 0.85),
+        arrowprops=dict(facecolor='black', width=2, headwidth=8),
+        ha='center',
+        va='center',
+        fontsize=10,
+        xycoords=ax.transAxes
+    )
+
     # Add title and axis styling
     ax.set_title(f"Percentage of Fatal Collisions by District ({YEAR})")
     ax.tick_params(axis="both", labelsize=8)
@@ -368,7 +380,7 @@ create_fatal_choropleth(
     OUTPUT_DIR,
     YEAR
 )
-#plt.show()
-plt.close()
+plt.show()
+#plt.close()
 
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
