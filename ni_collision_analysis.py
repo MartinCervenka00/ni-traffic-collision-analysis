@@ -99,6 +99,18 @@ ax.legend(handles=[outline_patch, district_patch, collision_patch],
 # Make coordinate numbers smaller
 ax.tick_params(axis="both", labelsize=8)
 
+# Add North arrow
+ax.annotate(
+    'N',
+    xy=(0.92, 0.92),
+    xytext=(0.92, 0.82),
+    arrowprops=dict(facecolor='black', width=2, headwidth=8),
+    ha='center',
+    va='center',
+    fontsize=10,
+    xycoords=ax.transAxes
+)
+
 plt.title(f"Road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
@@ -106,8 +118,8 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
 
 #remove a hashtag from the next line if you want to see the map and add # to the next line
-#plt.show()
-plt.close()
+plt.show()
+#plt.close()
 
 print(f"{YEAR} MAP created")
 
@@ -380,7 +392,7 @@ create_fatal_choropleth(
     OUTPUT_DIR,
     YEAR
 )
-plt.show()
-#plt.close()
+#plt.show()
+plt.close()
 
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
