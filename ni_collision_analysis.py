@@ -111,6 +111,13 @@ ax.annotate(
     xycoords=ax.transAxes
 )
 
+# Add source
+plt.figtext(
+    0.1, 0.02,
+    "Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
+    fontsize=8
+)
+
 plt.title(f"Road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
@@ -399,7 +406,7 @@ create_fatal_choropleth(
     OUTPUT_DIR,
     YEAR
 )
-plt.show()
-#plt.close()
+#plt.show()
+plt.close()
 
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
