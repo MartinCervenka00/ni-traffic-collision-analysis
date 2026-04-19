@@ -300,3 +300,75 @@ plt.close()
 
 print(f"{YEAR} GRAPH Severity created")
 
+# Creating a Choropleth map using fatal collisions percentage per district
+def create_fatal_choropleth(districts, severity_table, outline, output_dir, year):
+    """
+    Create a choropleth map showing the percentage of fatal collisions by district.
+
+    Parameters:
+    - districts: GeoDataFrame of district boundaries
+    - severity_table: table containing severity statistics by district
+    - outline: GeoDataFrame of Northern Ireland outline
+    - output_dir: folder where the output image will be saved
+    - year: selected year for analysis
+
+    Returns:
+    - saves a PNG map in the outputs folder
+    """
+
+    # Join severity values to district boundaries
+    districts_severity = districts.merge(
+        severity_table.reset_index(),
+        on="LGDNAME",
+        how="left"
+    )
+
+    # Make sure both layers use the same CRS
+    districts_severity = districts_severity.to_crs(epsg=29901)
+    outline = outline.to_crs(epsg=29901)
+
+    # Create figure and axis
+    fig, ax = plt.subplots(figsize=(10, 10))
+
+    # Plot districts using fatal percentage
+    districts_severity.plot(
+        column="fatal_percentage",
+        cmap="Reds",
+        linewidth=0.8,
+        edgecolor="black",
+        legend=True,
+        legend_kwds={
+            "label": "Fatal collisions (%)",
+            "shrink": 0.7
+        },
+        ax=ax
+    )
+
+    # Plot NI outline on top
+    outline.boundary.plot(ax=ax, color="black", linewidth=1)
+
+    # Add title and axis styling
+    ax.set_title(f"Percentage of Fatal Collisions by District ({YEAR})")
+    ax.tick_params(axis="both", labelsize=8)
+
+    # Add dashed grid
+    plt.grid(axis="both", linestyle="--", alpha=0.4)
+
+    # Save map
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / f"{YEAR}_MAP_fatal_percentage_choropleth.png",
+        dpi=300
+    )
+
+create_fatal_choropleth(
+    districts,
+    severity_table,
+    outline,
+    OUTPUT_DIR,
+    YEAR
+)
+#plt.show()
+plt.close()
+
+print(f"{YEAR} MAP fatal_percentage_choropleth created")
