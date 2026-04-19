@@ -207,7 +207,7 @@ plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
 #plt.show()
 plt.close()
 
-print(f"{YEAR} MAP created")
+print(f"{YEAR} MAP total collisions per district created")
 
 # Creating spatial join - connect collisions to districts
 joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
