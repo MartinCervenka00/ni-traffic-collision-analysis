@@ -322,7 +322,7 @@ print(f"{YEAR} GRAPH Severity created")
 # Creating a Choropleth map using fatal collisions percentage per district
 def create_fatal_choropleth(districts, severity_table, outline, output_dir, year):
     """
-    Create a choropleth map showing the percentage of fatal collisions by district.
+     Create a choropleth map showing the percentage of fatal collisions by district.
 
     Parameters:
     - districts: GeoDataFrame of district boundaries
@@ -410,3 +410,6 @@ create_fatal_choropleth(
 plt.close()
 
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
+
+#Use this to see text for docstring
+#print(nameofthefunction.__doc__)
