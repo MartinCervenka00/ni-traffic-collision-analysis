@@ -12,7 +12,7 @@ The script:
 - creates maps, graphs and summary tables
 - saves outputs as CSV and PNG files
 
-The script can be used for any available year from **2013** to **2024**.
+The script can be used for any available year from **2013** to **2025**.
 
 
 ## Data Download
@@ -47,7 +47,20 @@ Place them in the **data** folder:
 
 ## Installation
 
-Create an environment:
+By clicking the green **Code** button on the top of this page, three options are available:
+
+1. Select **Download ZIP** to save the files to your computer and run it in an IDE, such as **PyCharm**
+2. Select **Open with GitHub Desktop** - choose the local folder where the repository will be saved, and the project will be cloned automatically. 
+3. Select **Copy URL** to use the repository address with GitHub Desctop or the Git command line: https://github.com/MartinCervenka00/ni-traffic-collision-analysis.git 
+
+   The repository may also be cloned using:
+
+```python
+Git clone http://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
+Git ni-traffic-collision-analysis 
+```
+4. A conda environment is used to garantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
+
 ```python
 conda env create -f environment.yml
 conda activate ni-collisions
@@ -68,7 +81,7 @@ conda activate ni-collisions
 6. Change the year in the script if required:
 
 ```python
-YEAR = 2024
+YEAR = 2025
 ```
 The script will automatically load:
 - collision2025.csv
@@ -92,18 +105,11 @@ Results are saved in the **Outputs** folder.
 These include:
 
 - collision map
-- collisions by district CSV
-- collisions by district graph
-- casualties by district CSV
-- casualties by district graph
-- vehicles by district CSV
-- vehicles by district graph
+- collisions, casualties and vehicle with total row by district CSV 
+- collisions, casualties and vehicle by district graph
 - fatal collisions by district choropleth map
 - collision severity by district CSV
 - collision severity by district graph
-
-Each CSV file includes a final TOTAL row.
-
 
 ## Notes
 
