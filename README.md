@@ -71,9 +71,9 @@ conda activate ni-collisions
 YEAR = 2024
 ```
 The script will automatically load:
-- collision2024.csv
-- casualty2024.csv
-- vehicle2024.csv
+- collision2025.csv
+- casualty2025.csv
+- vehicle2025.csv
 
 7. Click the green Run button in the top-right corner of PyCharm.
 
