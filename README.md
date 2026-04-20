@@ -23,13 +23,11 @@ https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-coll
 
 To use another year, change the year at the end of the website address:
 
-Examples:
-
-- 2024
+Examples for year 2025:
 
 https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2024
 
-Download these three CSV files (examples for 2025):
+Download these three CSV files:
 
 - collision2025.csv
 - casualty2025.csv
