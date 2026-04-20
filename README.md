@@ -21,12 +21,6 @@ Go to the Open Data NI website:
 
 https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2025
 
-To use another year, change the year at the end of the website address:
-
-Examples for year 2025:
-
-https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2024
-
 Download these three CSV files:
 
 - collision2025.csv
@@ -34,6 +28,8 @@ Download these three CSV files:
 - vehicle2025.csv
 
 Save all downloaded CSV files inside the project **data** folder.
+
+To use another year, change the year at the end of the website address.
 
 
 ## Boundary Files
