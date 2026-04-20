@@ -19,25 +19,16 @@ The script can be used for any available year from **2013** to **2024**.
 
 Go to the Open Data NI website:
 
-https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2024
+https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2025
 
 To use another year, change the year at the end of the website address:
 
 Examples:
 
-- 2023  
-https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2023
+- 2024 
+https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2024
 
-- 2022  
-https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2022
-
-Download these three CSV files:
-
-- collisionYYYY.csv
-- casualtyYYYY.csv
-- vehicleYYYY.csv
-
-Example for 2024:
+Download these three CSV files (examples for 2025):
 
 - collision2024.csv
 - casualty2024.csv
