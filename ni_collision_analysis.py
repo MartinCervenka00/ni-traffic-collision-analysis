@@ -8,7 +8,7 @@ DATA_DIR = Path("data")
 OUTPUT_DIR = Path("outputs")
 
 # Select year for your analysis
-YEAR = 2024
+YEAR = 2025
 
 # Create function to create file paths for selected year
 def get_year_file_paths(data_dir, year):
