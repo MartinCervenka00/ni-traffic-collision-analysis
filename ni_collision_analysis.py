@@ -138,6 +138,33 @@ def create_fatal_choropleth(districts, severity_table, outline, output_dir, year
         dpi=300
     )
 
+def create_district_table(joined_data, output_dir, year, output_name, column_name):
+    """
+    Create a district summary table from joined spatial data and save it as a CSV file.
+
+    Parameters:
+    - joined_data: GeoDataFrame after spatial join
+    - output_dir: folder where the CSV file will be saved
+    - year: selected year for analysis
+    - output_name: short name for the output file
+    - column_name: name of the results column in the CSV file
+
+    Returns:
+    - grouped district table
+    """
+
+    district_table = joined_data.groupby("LGDNAME").size().sort_values(ascending=False)
+
+    save_with_total(
+        district_table,
+        output_dir / f"{year}_TABLE_{output_name}.csv",
+        column_name
+    )
+
+    print(f"{year} TABLE {output_name}.csv created")
+
+    return district_table
+
 # Load shapefiles - NI outline, NI districts
 outline = gpd.read_file(DATA_DIR/"ni_outline.shp")
 districts = gpd.read_file(DATA_DIR/"ni_districts.shp")
@@ -212,20 +239,14 @@ print(f"{YEAR} MAP total collisions per district created")
 # Creating spatial join - connect collisions to districts
 joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
 
-# Count collisions by district
-by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
-
-# Create outputs folder if it doesn't exist
-OUTPUT_DIR.mkdir(exist_ok=True)
-
-# Save results to CSV file in the Output folder
-save_with_total(
-    by_district,
-    OUTPUT_DIR / f"{YEAR}_TABLE_collisions_by_district.csv",
+# Calling count collisions by district
+by_district = create_district_table(
+    joined,
+    OUTPUT_DIR,
+    YEAR,
+    "collisions_by_district",
     "collision_count"
 )
-
-print(f"{YEAR}_TABLE_collisions_by_district.csv created")
 
 # Create graph for collisions in each district a save it to the Outputs folder as .png file
 plt.figure(figsize=(10, 6))
@@ -260,17 +281,14 @@ casualties_gdf = gpd.GeoDataFrame(
 # Use spatial join to districts boundaries
 joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate="within")
 
-# Count casualties by district
-casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values(ascending=False)
-
-# Saving new data from casualties to .csv file into Output folder
-save_with_total(
-    casualties_by_district,
-    OUTPUT_DIR / f"{YEAR}_TABLE_casualties_by_district.csv",
+# Calling count casualties by district
+casualties_by_district = create_district_table(
+    joined_casualties,
+    OUTPUT_DIR,
+    YEAR,
+    "casualties_by_district",
     "casualties_count"
 )
-
-print(f"{YEAR}_TABLE_casualties_by_district.csv created")
 
 # Creating graph from casualties dataset
 plt.figure(figsize=(10, 6))
@@ -305,17 +323,14 @@ vehicles_gdf = gpd.GeoDataFrame(
 # Using spatial join with districts shapefile
 joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
 
-# Count vehicles by district
-vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(ascending=False)
-
-# Saving vehicle by district to new .csv file in Output folder
-save_with_total(
-    vehicles_by_district,
-    OUTPUT_DIR / f"{YEAR}_TABLE_vehicles_by_district.csv",
+# Calling count vehicles by district
+vehicles_by_district = create_district_table(
+    joined_vehicles,
+    OUTPUT_DIR,
+    YEAR,
+    "vehicles_by_district",
     "vehicles_count"
 )
-
-print(f"{YEAR}_TABLE_vehicles_by_district.csv created")
 
 # Create third graph for dataset - vehicle by district
 plt.figure(figsize=(10, 6))
@@ -406,10 +421,11 @@ create_fatal_choropleth(
     OUTPUT_DIR,
     YEAR
 )
-plt.show()
-#plt.close()
+#plt.show()
+plt.close()
 
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
 
-#Use this to see text for docstring
-#print(nameofthefunction.__doc__)
+# Use this to see text for docstring
+# change the name of the function
+# print(create_district_table.__doc__)
