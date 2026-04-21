@@ -60,9 +60,10 @@ def save_with_total(series, output_path, column_name):
     df.to_csv(output_path, index=False)
 
 # Creating a Choropleth map using fatal collisions percentage per district
-def create_fatal_choropleth(districts, severity_table, outline, output_dir, year):
+def create_choropleth_map(districts, severity_table, outline, output_dir, year,
+                          column_name, legend_label, map_title, output_filename, cmap):
     """
-     Create a choropleth map showing the percentage of fatal collisions by district.
+    Create a choropleth map showing the percentage of fatal collisions by district.
 
     Parameters:
     - districts: GeoDataFrame of district boundaries
@@ -76,31 +77,35 @@ def create_fatal_choropleth(districts, severity_table, outline, output_dir, year
     """
 
     # Join severity values to district boundaries
-    districts_severity = districts.merge(
+    districts_metric = districts.merge(
         severity_table.reset_index(),
         on="LGDNAME",
         how="left"
     )
 
-    # Make sure both layers use the same CRS
-    districts_severity = districts_severity.to_crs(epsg=29901)
+    # Make sure layers use the same CRS
+    districts_metric = districts_metric.to_crs(epsg=29901)
     outline = outline.to_crs(epsg=29901)
 
     # Create figure and axis
     fig, ax = plt.subplots(figsize=(10, 10))
 
-    # Plot districts using fatal percentage
-    districts_severity.plot(
-        column="fatal_percentage",
-        cmap="Reds",
+    # Plot districts using percentage
+    districts_metric.plot(
+        column=column_name,
+        cmap=cmap,
         linewidth=0.8,
         edgecolor="black",
         legend=True,
         legend_kwds={
-            "label": "Fatal collisions (%)",
+            "label": legend_label,
             "shrink": 0.7
         },
-        ax=ax
+        ax=ax,
+        missing_kwds={
+            "color": "lightgrey",
+            "label": "No data"
+        }
     )
 
     # Plot NI outline on top
@@ -119,7 +124,7 @@ def create_fatal_choropleth(districts, severity_table, outline, output_dir, year
     )
 
     # Add title and axis styling
-    ax.set_title(f"Percentage of Fatal Collisions by District ({YEAR})")
+    ax.set_title(f"{map_title} ({YEAR})")
     ax.tick_params(axis="both", labelsize=8)
 
     # Add dashed grid
@@ -135,9 +140,9 @@ def create_fatal_choropleth(districts, severity_table, outline, output_dir, year
     # Save map
     plt.tight_layout()
     plt.savefig(
-        output_dir / f"{YEAR}_MAP_fatal_percentage_choropleth.png",
-        dpi=300
-    )
+        output_dir / output_filename, dpi=300)
+
+    plt.close()
 
 def create_district_table(joined_data, output_dir, year, output_name, column_name):
     """
@@ -376,13 +381,14 @@ severity_table["total"] = (
     severity_table["slight"]
 )
 
-# calculate percentage
-severity_table["fatal_percentage"] = severity_table["fatal"] / severity_table["total"] * 100
-severity_table["serious_percentage"] = severity_table["serious"] / severity_table["total"] * 100
-severity_table["slight_percentage"] = severity_table["slight"] / severity_table["total"] * 100
+# calculate percentages
+severity_table["fatal_percentage"] = (severity_table["fatal"] / severity_table["total"] * 100).round(2)
+severity_table["serious_percentage"] = (severity_table["serious"] / severity_table["total"] * 100).round(2)
+severity_table["slight_percentage"] = (severity_table["slight"] / severity_table["total"] * 100).round(2)
 
-# calculate ration (avoid division by zero):
-severity_table["serious_to_slight_ratio"] = severity_table["serious"] / severity_table["slight"].replace(0, pd.NA)
+# calculate ratio (avoid division by zero)
+severity_table["serious_to_slight_ratio"] = (severity_table["serious"] / severity_table["slight"].replace(0, pd.NA)
+                                             ).round(3)
 
 # save to csv
 severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_TABLE_severity_by_district.csv")
@@ -410,19 +416,66 @@ plt.close()
 
 print(f"{YEAR} GRAPH Severity by district created")
 
-# Calling the function - choropleth map
-create_fatal_choropleth(
+# Fatal percentage choropleth
+create_choropleth_map(
     districts,
     severity_table,
     outline,
     OUTPUT_DIR,
-    YEAR
+    YEAR,
+    "fatal_percentage",
+    "Fatal collisions (%)",
+    "Percentage of Fatal Collisions by District",
+    f"{YEAR}_MAP_fatal_percentage_choropleth.png",
+    "Reds"
 )
-#plt.show()
-plt.close()
-
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
+
+# Serious percentage choropleth
+create_choropleth_map(
+    districts,
+    severity_table,
+    outline,
+    OUTPUT_DIR,
+    YEAR,
+    "serious_percentage",
+    "Serious collisions (%)",
+    "Percentage of Serious Collisions by District",
+    f"{YEAR}_MAP_serious_percentage_choropleth.png",
+    "Oranges"
+)
+print(f"{YEAR} MAP serious_percentage_choropleth created")
+
+# Slight percentage choropleth
+create_choropleth_map(
+    districts,
+    severity_table,
+    outline,
+    OUTPUT_DIR,
+    YEAR,
+    "slight_percentage",
+    "Slight collisions (%)",
+    "Percentage of Slight Collisions by District",
+    f"{YEAR}_MAP_slight_percentage_choropleth.png",
+    "YlGn"
+)
+print(f"{YEAR} MAP slight_percentage_choropleth created")
+
+# Serious-to-slight ratio choropleth
+create_choropleth_map(
+    districts,
+    severity_table,
+    outline,
+    OUTPUT_DIR,
+    YEAR,
+    "serious_to_slight_ratio",
+    "Serious to slight ratio",
+    "Serious-to-Slight Collision Ratio by District",
+    f"{YEAR}_MAP_serious_to_slight_ratio_choropleth.png",
+    "Purples"
+)
+print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 
 # Use this to see text for docstring
 # change the name of the function
-# print(create_district_table.__doc__)
+#print(create_choropleth_map.__doc__)
