@@ -1,4 +1,4 @@
-# Northern Ireland Traffic Collision Analysis
+# Northern Ireland Road Traffic Collision Analysis
 
 
 ## Overview
@@ -51,15 +51,15 @@ By clicking the green **Code** button on the top of this page, three options are
 
 1. Select **Download ZIP** to save the files to your computer and run it in an IDE, such as **PyCharm**
 2. Select **Open with GitHub Desktop** - choose the local folder where the repository will be saved, and the project will be cloned automatically. 
-3. Select **Copy URL** to use the repository address with GitHub Desctop or the Git command line: https://github.com/MartinCervenka00/ni-traffic-collision-analysis.git 
+3. Select **Copy URL** to use the repository address with GitHub Desktop or the Git command line: https://github.com/MartinCervenka00/ni-traffic-collision-analysis.git 
 
    The repository may also be cloned using:
 
 ```python
-Git clone http://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
-Git ni-traffic-collision-analysis 
+git clone http://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
+cd ni-traffic-collision-analysis 
 ```
-4. A conda environment is used to garantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
+4. A conda environment is used to guarantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
 
 ```python
 conda env create -f environment.yml
@@ -88,7 +88,7 @@ The script will automatically load:
 - casualty2025.csv
 - vehicle2025.csv
 
-7. Click the green Run button in the top-right corner of PyCharm.
+7. Click the green **Run** button in the top-right corner of PyCharm.
 
 
 8. If successful, the terminal should show:
