@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 # Create file paths
 DATA_DIR = Path("data")
@@ -192,7 +193,6 @@ districts.plot(ax=ax, facecolor="none", edgecolor="blue")
 collisions_gdf.plot(ax=ax, color="red", markersize=1)
 
 # Adding legend to the map
-import matplotlib.patches as mpatches
 
 outline_patch = mpatches.Patch(edgecolor="black", facecolor="none", label="NI Outline")
 district_patch = mpatches.Patch(edgecolor="blue", facecolor="none", label="Districts")
@@ -234,7 +234,7 @@ plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
 #plt.show()
 plt.close()
 
-print(f"{YEAR} MAP total collisions per district created")
+print(f"{YEAR} MAP total collisions in NI created")
 
 # Creating spatial join - connect collisions to districts
 joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
@@ -252,7 +252,7 @@ by_district = create_district_table(
 plt.figure(figsize=(10, 6))
 
 by_district.sort_values().plot(kind="barh")
-plt.title("Number of Collisions by District (2024)")
+plt.title(f"Number of Collisions by District ({YEAR})")
 plt.xlabel("Collision Count")
 plt.ylabel("District")
 plt.grid(axis="x", linestyle="--", alpha=0.7)
@@ -381,14 +381,11 @@ severity_table["fatal_percentage"] = severity_table["fatal"] / severity_table["t
 severity_table["serious_percentage"] = severity_table["serious"] / severity_table["total"] * 100
 severity_table["slight_percentage"] = severity_table["slight"] / severity_table["total"] * 100
 
-# calculate ratio
-severity_table["serious_to_slight_ratio"] = severity_table["serious"] / severity_table["slight"]
-
-# avoid division by zero:
+# calculate ration (avoid division by zero):
 severity_table["serious_to_slight_ratio"] = severity_table["serious"] / severity_table["slight"].replace(0, pd.NA)
 
 # save to csv
-severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_severity_by_district.csv")
+severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_TABLE_severity_by_district.csv")
 print(f"{YEAR} TABLE Severity_by_district.csv created")
 
 # create bar chart - Collision Severity by District
@@ -408,10 +405,10 @@ plt.ylabel("Number of collisions")
 plt.legend(title="Severity")
 plt.grid(axis="y", linestyle="--", alpha=0.7)
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / f"{YEAR}_severity_by_district.png", dpi=300)
+plt.savefig(OUTPUT_DIR / f"{YEAR}_GRAPH_severity_by_district.png", dpi=300)
 plt.close()
 
-print(f"{YEAR} GRAPH Severity created")
+print(f"{YEAR} GRAPH Severity by district created")
 
 # Calling the function - choropleth map
 create_fatal_choropleth(
