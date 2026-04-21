@@ -59,7 +59,8 @@ By clicking the green **Code** button on the top of this page, three options are
 git clone http://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
 cd ni-traffic-collision-analysis 
 ```
-4. A conda environment is used to guarantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
+## Environment
+A conda environment is used to guarantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
 
 ```python
 conda env create -f environment.yml
