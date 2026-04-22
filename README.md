@@ -103,6 +103,8 @@ Process finished with exit code 0
 ## Outputs
 Results are saved in the **Outputs** folder.
 
+Adding images here
+
 These include:
 
 - collision map
