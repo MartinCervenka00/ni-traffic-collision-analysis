@@ -63,7 +63,7 @@ def save_with_total(series, output_path, column_name):
 def add_map_elements(
         ax,
         source_text="Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
-        scale_length=10000
+        scale_length=20000
 ):
     """
     Add north arrow, source text and scale bar to a map.
