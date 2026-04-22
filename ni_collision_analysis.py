@@ -302,10 +302,10 @@ create_bar_chart(
     "Number of Collisions by District",
     "Collision Count",
     "District",
-    f"{YEAR}_GRAPH_collisions_by_districts.png"
+    f"{YEAR}_GRAPH_collisions_by_district.png"
 )
 
-# Next part will load casualties_2024.csv to the script
+# Next part will load casualty data for selected year
 casualties = pd.read_csv(CASUALTY_CSV)
 
 print(f"{YEAR} DATA Casualties loaded")
@@ -345,7 +345,7 @@ create_bar_chart(
 )
 
 # Loading vehicles to the code (using Pandas library)
-vehicles=pd.read_csv(VEHICLE_CSV)
+vehicles = pd.read_csv(VEHICLE_CSV)
 
 print(f"{YEAR} DATA Vehicles loaded")
 
