@@ -4,12 +4,13 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-# Create file paths
-DATA_DIR = Path("data")
-OUTPUT_DIR = Path("outputs")
-
 # Select year for your analysis
 YEAR = 2025
+
+# Create file paths and ensure output folder exist
+DATA_DIR = Path("data")
+OUTPUT_DIR = Path("outputs")
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Create function to create file paths for selected year
 def get_year_file_paths(data_dir, year):
@@ -322,7 +323,6 @@ add_map_elements(ax)
 plt.title(f" Total road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
-OUTPUT_DIR.mkdir(exist_ok=True)
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
 
 #remove a hashtag from the next line if you want to see the map and add # to the next line
