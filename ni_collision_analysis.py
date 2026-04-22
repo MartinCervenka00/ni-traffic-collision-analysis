@@ -144,6 +144,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
 
     plt.close()
 
+# Create function for tables
 def create_district_table(joined_data, output_dir, year, output_name, column_name):
     """
     Create a district summary table from joined spatial data and save it as a CSV file.
@@ -170,6 +171,46 @@ def create_district_table(joined_data, output_dir, year, output_name, column_nam
     print(f"{year} TABLE {output_name}.csv created")
 
     return district_table
+
+# Create function for bar charts
+def create_bar_chart(series, output_dir, year,
+                     title, xlabel, ylabel,
+                     output_filename, color=None):
+    """
+    Create and save a horizontal bar chart from a pandas Series.
+
+    Parameters:
+    - series: pandas Series with district names as index and values as counts
+    - output_dir: folder where the image will be saved
+    - year: selected year for analysis
+    - title: chart title
+    - xlabel: x-axis label
+    - ylabel: y-axis label
+    - output_filename: output PNG filename
+    - color: optional bar colour
+
+    Returns:
+    - saves a PNG chart in the outputs folder
+    """
+
+    plt.figure(figsize=(10, 6))
+
+    series.sort_values().plot(
+        kind="barh",
+        color=color
+    )
+
+    plt.title(f"{title} ({year})")
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.grid(axis="x", linestyle="--", alpha=0.7)
+    plt.tight_layout()
+
+    plt.savefig(output_dir / output_filename, dpi=300)
+    plt.close()
+
+    print(f"{year} GRAPH {output_filename} created")
+
 
 # Load shapefiles - NI outline, NI districts
 outline = gpd.read_file(DATA_DIR/"ni_outline.shp")
@@ -253,20 +294,16 @@ by_district = create_district_table(
     "collision_count"
 )
 
-# Create graph for collisions in each district a save it to the Outputs folder as .png file
-plt.figure(figsize=(10, 6))
-
-by_district.sort_values().plot(kind="barh")
-plt.title(f"Number of Collisions by District ({YEAR})")
-plt.xlabel("Collision Count")
-plt.ylabel("District")
-plt.grid(axis="x", linestyle="--", alpha=0.7)
-plt.tight_layout()
-
-plt.savefig(OUTPUT_DIR / f"{YEAR}_GRAPH_collisions_by_districts.png", dpi=300)
-
-plt.close()
-print(f"{YEAR} GRAPH Collisions created")
+# Create graph for collisions by district
+create_bar_chart(
+    by_district,
+    OUTPUT_DIR,
+    YEAR,
+    "Number of Collisions by District",
+    "Collision Count",
+    "District",
+    f"{YEAR}_GRAPH_collisions_by_districts.png"
+)
 
 # Next part will load casualties_2024.csv to the script
 casualties = pd.read_csv(CASUALTY_CSV)
@@ -295,20 +332,17 @@ casualties_by_district = create_district_table(
     "casualties_count"
 )
 
-# Creating graph from casualties dataset
-plt.figure(figsize=(10, 6))
-casualties_by_district.sort_values().plot(kind="barh", color="green")
-plt.title(f"Casualties by District ({YEAR})")
-plt.xlabel("Number of casualties")
-plt.ylabel("District")
-plt.grid(axis="x", linestyle="--", alpha=0.7)
-plt.tight_layout()
-
-plt.savefig(OUTPUT_DIR / f"{YEAR}_GRAPH_casualties_by_district.png", dpi=300)
-
-plt.close()
-
-print(f"{YEAR} GRAPH Casualties created")
+# Creating casualties graph
+create_bar_chart(
+    casualties_by_district,
+    OUTPUT_DIR,
+    YEAR,
+    "Casualties by District",
+    "Number of casualties",
+    "District",
+    f"{YEAR}_GRAPH_casualties_by_district.png",
+    color="green"
+)
 
 # Loading vehicles to the code (using Pandas library)
 vehicles=pd.read_csv(VEHICLE_CSV)
@@ -337,23 +371,17 @@ vehicles_by_district = create_district_table(
     "vehicles_count"
 )
 
-# Create third graph for dataset - vehicle by district
-plt.figure(figsize=(10, 6))
-
-vehicles_by_district.sort_values().plot(kind="barh", color="orange")
-plt.title(f"Vehicles by District ({YEAR})")
-plt.xlabel("Number of vehicles")
-plt.ylabel("District")
-plt.grid(axis="x", linestyle="--", alpha=0.7)
-plt.tight_layout()
-
-plt.savefig(OUTPUT_DIR / f"{YEAR}_GRAPH_vehicles_by_district.png", dpi=300)
-
-plt.close()
-
-print(f"{YEAR} GRAPH Vehicles created ")
-
-# Collision Severity Analysis
+# Create graph for vehicle by district
+create_bar_chart(
+    vehicles_by_district,
+    OUTPUT_DIR,
+    YEAR,
+    "Vehicles by District",
+    "Number of vehicles",
+    "District",
+    f"{YEAR}_GRAPH_vehicles_by_district.png",
+    color="orange"
+)
 
 # Table with districts and columns with severity types
 severity_table = (
@@ -478,4 +506,4 @@ print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 
 # Use this to see text for docstring
 # change the name of the function
-#print(create_choropleth_map.__doc__)
+#print(create_bar_chart.__doc__)
