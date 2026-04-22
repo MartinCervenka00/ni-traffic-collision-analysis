@@ -124,7 +124,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     )
 
     # Add title and axis styling
-    ax.set_title(f"{map_title} ({YEAR})")
+    ax.set_title(f"{map_title} ({year})")
     ax.tick_params(axis="both", labelsize=8)
 
     # Add dashed grid
