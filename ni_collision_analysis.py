@@ -59,6 +59,87 @@ def save_with_total(series, output_path, column_name):
 
     df.to_csv(output_path, index=False)
 
+# Creating function for elements in the maps
+def add_map_elements(
+        ax,
+        source_text="Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
+        scale_length=10000
+):
+    """
+    Add north arrow, source text and scale bar to a map.
+
+    Parameters:
+    - ax: matplotlib axis
+    - source_text: text shown at bottom of figure
+    - scale_length: scale bar length in metres (EPSG:29901 uses metres)
+
+    Example:
+    add_map_elements(ax)
+    """
+
+    # North arrow
+    ax.annotate(
+        "N",
+        xy=(0.93, 0.93),
+        xytext=(0.93, 0.85),
+        arrowprops=dict(
+            facecolor="black",
+            width=2,
+            headwidth=8
+        ),
+        ha="center",
+        va="center",
+        fontsize=10,
+        xycoords=ax.transAxes
+    )
+
+    # Scale bar
+    xmin, xmax = ax.get_xlim()
+    ymin, ymax = ax.get_ylim()
+
+    x_start = xmin + (xmax - xmin) * 0.05
+    y_start = ymin + (ymax - ymin) * 0.05
+
+    # Main scale line
+    ax.plot(
+        [x_start, x_start + scale_length],
+        [y_start, y_start],
+        color="black",
+        linewidth=2
+    )
+
+    # End ticks
+    ax.plot(
+        [x_start, x_start],
+        [y_start - 500, y_start + 500],
+        color="black",
+        linewidth=2
+    )
+
+    ax.plot(
+        [x_start + scale_length, x_start + scale_length],
+        [y_start - 500, y_start + 500],
+        color="black",
+        linewidth=2
+    )
+
+    # Scale text
+    ax.text(
+        x_start + scale_length / 2,
+        y_start + 1200,
+        f"{int(scale_length / 1000)} km",
+        ha="center",
+        fontsize=9
+    )
+
+    # Source text
+    plt.figtext(
+        0.10,
+        0.02,
+        source_text,
+        fontsize=8
+    )
+
 # Creating a Choropleth map using fatal collisions percentage per district
 def create_choropleth_map(districts, severity_table, outline, output_dir, year,
                           column_name, legend_label, map_title, output_filename, cmap):
@@ -111,18 +192,6 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     # Plot NI outline on top
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
-    # Add North arrow
-    ax.annotate(
-        'N',
-        xy=(0.92, 0.92),
-        xytext=(0.92, 0.85),
-        arrowprops=dict(facecolor='black', width=2, headwidth=8),
-        ha='center',
-        va='center',
-        fontsize=10,
-        xycoords=ax.transAxes
-    )
-
     # Add title and axis styling
     ax.set_title(f"{map_title} ({year})")
     ax.tick_params(axis="both", labelsize=8)
@@ -130,12 +199,8 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     # Add dashed grid
     plt.grid(axis="both", linestyle="--", alpha=0.4)
 
-    # Add source
-    plt.figtext(
-        0.1, 0.02,
-        "Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
-        fontsize=8
-    )
+    # Add north arrow, source, scale
+    add_map_elements(ax)
 
     # Save map
     plt.tight_layout()
@@ -251,24 +316,8 @@ ax.legend(handles=[outline_patch, district_patch, collision_patch],
 # Make coordinate numbers smaller
 ax.tick_params(axis="both", labelsize=8)
 
-# Add North arrow
-ax.annotate(
-    'N',
-    xy=(0.92, 0.92),
-    xytext=(0.92, 0.85),
-    arrowprops=dict(facecolor='black', width=2, headwidth=8),
-    ha='center',
-    va='center',
-    fontsize=10,
-    xycoords=ax.transAxes
-)
-
-# Add source
-plt.figtext(
-    0.1, 0.02,
-    "Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
-    fontsize=8
-)
+# Adding north arrow, scale and source
+add_map_elements(ax)
 
 plt.title(f" Total road traffic collisions in Northern Ireland ({YEAR})")
 
@@ -506,4 +555,4 @@ print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 
 # Use this to see text for docstring
 # change the name of the function
-#print(create_bar_chart.__doc__)
+# print(add_map_elements.__doc__)
