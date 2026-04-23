@@ -99,20 +99,65 @@ The script will automatically load:
 Process finished with exit code 0
 ```
 
-
 ## Outputs
-Results are saved in the **Outputs** folder.
 
-Adding images here
+Results are saved in the **output** folder as PNG charts/maps and CSV summary tables.
 
-These include:
 
-- collision map
-- collisions, casualties and vehicle with total row by district CSV 
-- collisions, casualties and vehicle by district graph
-- fatal collisions by district choropleth map
-- collision severity by district CSV
-- collision severity by district graph
+## Maps
+
+### Collision Locations
+![Collision Locations](output/2025_MAP_collisions.png)
+
+### Fatal Percentage by District
+![Fatal Percentage by District](output/2025_MAP_fatal_percentage_choropleth.png)
+
+### Serious Percentage by District
+![Serious Percentage by District](output/2025_MAP_serious_percentage_choropleth.png)
+
+### Slight Percentage by District
+![Slight Percentage by District](output/2025_MAP_slight_percentage_choropleth.png)
+
+### Serious to Slight Ratio by District
+![Serious to Slight Ratio by District](output/2025_MAP_serious_to_slight_ratio_choropleth.png)
+
+
+## Graphs
+
+### Casualties by District
+![Casualties by District](output/2025_GRAPH_casualties_by_district.png)
+
+### Collisions by District
+![Collisions by District](output/2025_GRAPH_collisions_by_district.png)
+
+### Vehicles by District
+![Vehicles by District](output/2025_GRAPH_vehicles_by_district.png)
+
+### Collision Severity by District
+![Collision Severity by District](output/2025_GRAPH_severity_by_district.png)
+
+
+## CSV Tables
+
+### District Summary Tables
+
+table will be added after joining them together
+
+## Collision Severity by District (2025)
+
+| District | Fatal | Serious | Slight | Total | Fatal % | Serious % | Slight % | Serious/Slight Ratio |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Antrim and Newtownabbey | 6 | 52 | 359 | 417 | 1.44 | 12.47 | 86.09 | 0.145 |
+| Ards and North Down | 7 | 56 | 290 | 353 | 1.98 | 15.86 | 82.15 | 0.193 |
+| Armagh City, Banbridge and Craigavon | 5 | 108 | 441 | 554 | 0.90 | 19.49 | 79.60 | 0.245 |
+| Belfast | 5 | 161 | 966 | 1132 | 0.44 | 14.22 | 85.34 | 0.167 |
+| Causeway Coast and Glens | 7 | 74 | 265 | 346 | 2.02 | 21.39 | 76.59 | 0.279 |
+| Derry City and Strabane | 0 | 54 | 303 | 357 | 0.00 | 15.13 | 84.87 | 0.178 |
+| Fermanagh and Omagh | 4 | 58 | 221 | 283 | 1.41 | 20.49 | 78.09 | 0.262 |
+| Lisburn and Castlereagh | 2 | 87 | 337 | 426 | 0.47 | 20.42 | 79.11 | 0.258 |
+| Mid Ulster | 9 | 70 | 287 | 366 | 2.46 | 19.13 | 78.42 | 0.244 |
+| Mid and East Antrim | 2 | 60 | 228 | 290 | 0.69 | 20.69 | 78.62 | 0.263 |
+| Newry, Mourne and Down | 6 | 114 | 371 | 491 | 1.22 | 23.22 | 75.56 | 0.307 |
 
 ## Notes
 
