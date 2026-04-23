@@ -103,26 +103,12 @@ Process finished with exit code 0
 
 Results are saved in the **output** folder as PNG charts/maps and CSV summary tables.
 
+### District Summary Tables
 
-## Maps
+table will be added after joining them together
 
 ### Collision Locations
 ![Collision Locations](outputs/2025_MAP_collisions.png)
-
-### Fatal Percentage by District
-![Fatal Percentage by District](outputs/2025_MAP_fatal_percentage_choropleth.png)
-
-### Serious Percentage by District
-![Serious Percentage by District](outputs/2025_MAP_serious_percentage_choropleth.png)
-
-### Slight Percentage by District
-![Slight Percentage by District](outputs/2025_MAP_slight_percentage_choropleth.png)
-
-### Serious to Slight Ratio by District
-![Serious to Slight Ratio by District](outputs/2025_MAP_serious_to_slight_ratio_choropleth.png)
-
-
-## Graphs
 
 ### Casualties by District
 ![Casualties by District](outputs/2025_GRAPH_casualties_by_district.png)
@@ -132,16 +118,6 @@ Results are saved in the **output** folder as PNG charts/maps and CSV summary ta
 
 ### Vehicles by District
 ![Vehicles by District](outputs/2025_GRAPH_vehicles_by_district.png)
-
-### Collision Severity by District
-![Collision Severity by District](outputs/2025_GRAPH_severity_by_district.png)
-
-
-## CSV Tables
-
-### District Summary Tables
-
-table will be added after joining them together
 
 ## Collision Severity by District (2025)
 
@@ -158,6 +134,22 @@ table will be added after joining them together
 | Mid Ulster | 9 | 70 | 287 | 366 | 2.46 | 19.13 | 78.42 | 0.244 |
 | Mid and East Antrim | 2 | 60 | 228 | 290 | 0.69 | 20.69 | 78.62 | 0.263 |
 | Newry, Mourne and Down | 6 | 114 | 371 | 491 | 1.22 | 23.22 | 75.56 | 0.307 |
+
+### Fatal Percentage by District
+![Fatal Percentage by District](outputs/2025_MAP_fatal_percentage_choropleth.png)
+
+### Serious Percentage by District
+![Serious Percentage by District](outputs/2025_MAP_serious_percentage_choropleth.png)
+
+### Slight Percentage by District
+![Slight Percentage by District](outputs/2025_MAP_slight_percentage_choropleth.png)
+
+### Collision Severity by District
+![Collision Severity by District](outputs/2025_GRAPH_severity_by_district.png)
+
+### Serious to Slight Ratio by District
+![Serious to Slight Ratio by District](outputs/2025_MAP_serious_to_slight_ratio_choropleth.png)
+
 
 ## Notes
 
