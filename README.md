@@ -107,34 +107,34 @@ Results are saved in the **output** folder as PNG charts/maps and CSV summary ta
 ## Maps
 
 ### Collision Locations
-![Collision Locations](output/2025_MAP_collisions.png)
+![Collision Locations](outputs/2025_MAP_collisions.png)
 
 ### Fatal Percentage by District
-![Fatal Percentage by District](output/2025_MAP_fatal_percentage_choropleth.png)
+![Fatal Percentage by District](outputs/2025_MAP_fatal_percentage_choropleth.png)
 
 ### Serious Percentage by District
-![Serious Percentage by District](output/2025_MAP_serious_percentage_choropleth.png)
+![Serious Percentage by District](outputs/2025_MAP_serious_percentage_choropleth.png)
 
 ### Slight Percentage by District
-![Slight Percentage by District](output/2025_MAP_slight_percentage_choropleth.png)
+![Slight Percentage by District](outputs/2025_MAP_slight_percentage_choropleth.png)
 
 ### Serious to Slight Ratio by District
-![Serious to Slight Ratio by District](output/2025_MAP_serious_to_slight_ratio_choropleth.png)
+![Serious to Slight Ratio by District](outputs/2025_MAP_serious_to_slight_ratio_choropleth.png)
 
 
 ## Graphs
 
 ### Casualties by District
-![Casualties by District](output/2025_GRAPH_casualties_by_district.png)
+![Casualties by District](outputs/2025_GRAPH_casualties_by_district.png)
 
 ### Collisions by District
-![Collisions by District](output/2025_GRAPH_collisions_by_district.png)
+![Collisions by District](outputs/2025_GRAPH_collisions_by_district.png)
 
 ### Vehicles by District
-![Vehicles by District](output/2025_GRAPH_vehicles_by_district.png)
+![Vehicles by District](outputs/2025_GRAPH_vehicles_by_district.png)
 
 ### Collision Severity by District
-![Collision Severity by District](output/2025_GRAPH_severity_by_district.png)
+![Collision Severity by District](outputs/2025_GRAPH_severity_by_district.png)
 
 
 ## CSV Tables
