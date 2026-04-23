@@ -143,7 +143,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     outline = outline.to_crs(epsg=29901)
 
     # Create figure and axis
-    fig, ax = plt.subplots(figsize=(10, 10))
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     # Plot districts using percentage
     districts_metric.plot(
@@ -167,7 +167,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
     # Add title and axis styling
-    ax.set_title(f"{map_title} ({year})")
+    ax.set_title(f"{map_title} ({year})", pad=16)
     ax.tick_params(axis="both", labelsize=8)
 
     # Add dashed grid
@@ -304,7 +304,7 @@ outline = outline.to_crs(epsg=29901)
 districts = districts.to_crs(epsg=29901)
 
 # Area is being plotted for both ni outline, districts and collision
-fig, ax = plt.subplots(figsize=(10, 10))
+fig, ax = plt.subplots(figsize=(8, 6))
 outline.plot(ax=ax, facecolor="none", edgecolor="black")
 districts.plot(ax=ax, facecolor="none", edgecolor="blue")
 collisions_gdf.plot(ax=ax, color="red", markersize=1)
