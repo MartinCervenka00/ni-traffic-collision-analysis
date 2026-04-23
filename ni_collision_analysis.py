@@ -33,33 +33,6 @@ def get_year_file_paths(data_dir, year):
 # File paths for collision, casualty and vehicle data - for selected year
 COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
 
-# Creating function for saving total numbers of collisions, casualties and vehicles to the new line in each .csv
-def save_with_total(series, output_path, column_name):
-    """
-    Save district totals to a CSV file and add a final row showing the overall total.
-
-    Parameters:
-    - series: grouped results such as collisions, casualties or vehicles by district
-    - output_path: location where the CSV file will be saved
-    - column_name: name of the results column in the CSV file
-
-    Returns:
-    - saves a new CSV file with a TOTAL row at the end
-    """
-
-    df = series.rename(column_name).reset_index()
-
-    total_value = df[column_name].sum()
-
-    total_row = pd.DataFrame({
-        df.columns[0]: ["TOTAL"],
-        column_name: [total_value]
-    })
-
-    df = pd.concat([df, total_row], ignore_index=True)
-
-    df.to_csv(output_path, index=False)
-
 # Creating function for elements in the maps
 def add_map_elements(
         ax,
@@ -145,7 +118,7 @@ def add_map_elements(
 def create_choropleth_map(districts, severity_table, outline, output_dir, year,
                           column_name, legend_label, map_title, output_filename, cmap):
     """
-    Create a choropleth map showing the percentage of fatal collisions by district.
+    Create a choropleth map showing a selected collision severity metric by district.
 
     Parameters:
     - districts: GeoDataFrame of district boundaries
@@ -210,33 +183,65 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
 
     plt.close()
 
-# Create function for tables
-def create_district_table(joined_data, output_dir, year, output_name, column_name):
+def create_combined_district_table(
+    collisions_joined,
+    casualties_joined,
+    vehicles_joined,
+    output_dir,
+    year
+):
     """
-    Create a district summary table from joined spatial data and save it as a CSV file.
-
-    Parameters:
-    - joined_data: GeoDataFrame after spatial join
-    - output_dir: folder where the CSV file will be saved
-    - year: selected year for analysis
-    - output_name: short name for the output file
-    - column_name: name of the results column in the CSV file
-
-    Returns:
-    - grouped district table
+    Create one district summary table with collision, casualty and vehicle counts,
+    plus a TOTAL row, and save it as a CSV file.
     """
 
-    district_table = joined_data.groupby("LGDNAME").size().sort_values(ascending=False)
-
-    save_with_total(
-        district_table,
-        output_dir / f"{year}_TABLE_{output_name}.csv",
-        column_name
+    collisions_count = (
+        collisions_joined.groupby("LGDNAME")
+        .size()
+        .rename("collision_count")
     )
 
-    print(f"{year} TABLE {output_name}.csv created")
+    casualties_count = (
+        casualties_joined.groupby("LGDNAME")
+        .size()
+        .rename("casualties_count")
+    )
 
-    return district_table
+    vehicles_count = (
+        vehicles_joined.groupby("LGDNAME")
+        .size()
+        .rename("vehicles_count")
+    )
+
+    combined_table = pd.concat(
+        [collisions_count, casualties_count, vehicles_count],
+        axis=1
+    ).fillna(0)
+
+    combined_table = combined_table.astype(int)
+
+    combined_table = combined_table.sort_values(
+        "collision_count",
+        ascending=False
+    )
+
+    total_row = pd.DataFrame({
+        "collision_count": [combined_table["collision_count"].sum()],
+        "casualties_count": [combined_table["casualties_count"].sum()],
+        "vehicles_count": [combined_table["vehicles_count"].sum()]
+    }, index=["TOTAL"])
+
+    combined_table = pd.concat([combined_table, total_row])
+
+    combined_table.to_csv(
+        output_dir / f"{year}_TABLE_collisions_casualties_vehicles_by_district.csv"
+    )
+
+    print(
+        f"{year} TABLE collisions_casualties_vehicles_by_district.csv created"
+    )
+
+    return combined_table
 
 # Create function for bar charts
 def create_bar_chart(series, output_dir, year,
@@ -275,7 +280,7 @@ def create_bar_chart(series, output_dir, year,
     plt.savefig(output_dir / output_filename, dpi=300)
     plt.close()
 
-    print(f"{year} GRAPH {output_filename} created")
+    print(f"{year} GRAPH {title} created")
 
 
 # Load shapefiles - NI outline, NI districts
@@ -320,7 +325,7 @@ ax.tick_params(axis="both", labelsize=8)
 # Adding north arrow, scale and source
 add_map_elements(ax)
 
-plt.title(f" Total road traffic collisions in Northern Ireland ({YEAR})")
+plt.title(f"Total road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
@@ -334,14 +339,8 @@ print(f"{YEAR} MAP total collisions in NI created")
 # Creating spatial join - connect collisions to districts
 joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
 
-# Calling count collisions by district
-by_district = create_district_table(
-    joined,
-    OUTPUT_DIR,
-    YEAR,
-    "collisions_by_district",
-    "collision_count"
-)
+# Create grouped series for collision graph
+by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Create graph for collisions by district
 create_bar_chart(
@@ -372,14 +371,8 @@ casualties_gdf = gpd.GeoDataFrame(
 # Use spatial join to districts boundaries
 joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate="within")
 
-# Calling count casualties by district
-casualties_by_district = create_district_table(
-    joined_casualties,
-    OUTPUT_DIR,
-    YEAR,
-    "casualties_by_district",
-    "casualties_count"
-)
+# Create grouped series for casualties graph
+casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Creating casualties graph
 create_bar_chart(
@@ -411,13 +404,16 @@ vehicles_gdf = gpd.GeoDataFrame(
 # Using spatial join with districts shapefile
 joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
 
-# Calling count vehicles by district
-vehicles_by_district = create_district_table(
+# Create grouped series for vehicle graph
+vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(ascending=False)
+
+# Create one combined table for collisions, casualties and vehicles
+combined_table = create_combined_district_table(
+    joined,
+    joined_casualties,
     joined_vehicles,
     OUTPUT_DIR,
-    YEAR,
-    "vehicles_by_district",
-    "vehicles_count"
+    YEAR
 )
 
 # Create graph for vehicle by district
