@@ -175,4 +175,4 @@ Results are saved in the **output** folder as PNG charts/maps and CSV summary ta
 
 ## Author
 
-Martin Cervenka
+Martin Cervenka, Ulster University
