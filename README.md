@@ -103,9 +103,23 @@ Process finished with exit code 0
 
 Results are saved in the **output** folder as PNG charts/maps and CSV summary tables.
 
-### District Summary Tables
+### District Summary Table
 
-table will be added after joining them together
+
+| District | Collisions | Casualties | Vehicles |
+|---|---:|---:|---:|
+| Belfast | 1132 | 1764 | 2146 |
+| Armagh City, Banbridge and Craigavon | 554 | 837 | 1012 |
+| Newry, Mourne and Down | 491 | 801 | 886 |
+| Lisburn and Castlereagh | 426 | 685 | 861 |
+| Antrim and Newtownabbey | 417 | 666 | 815 |
+| Mid Ulster | 366 | 584 | 666 |
+| Derry City and Strabane | 357 | 570 | 680 |
+| Ards and North Down | 353 | 524 | 656 |
+| Causeway Coast and Glens | 346 | 551 | 641 |
+| Mid and East Antrim | 290 | 450 | 518 |
+| Fermanagh and Omagh | 283 | 447 | 513 |
+| **TOTAL** | **5015** | **7879** | **9394** |
 
 ### Collision Locations
 ![Collision Locations](outputs/2025_MAP_collisions.png)
