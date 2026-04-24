@@ -143,7 +143,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     outline = outline.to_crs(epsg=29901)
 
     # Create figure and axis
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(9, 6.5))
 
     # Plot districts using percentage
     districts_metric.plot(
@@ -313,7 +313,7 @@ outline = outline.to_crs(epsg=29901)
 districts = districts.to_crs(epsg=29901)
 
 # Area is being plotted for both ni outline and districts
-fig, ax = plt.subplots(figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(9, 6.5))
 districts.plot(ax=ax, facecolor="none", edgecolor="grey", linewidth=0.4)
 outline.plot(ax=ax, facecolor="none", edgecolor="black", linewidth=1)
 
@@ -350,7 +350,7 @@ add_map_elements(ax)
 plt.title(f"Total road traffic collisions in Northern Ireland ({YEAR})")
 
 # Save image to output directory
-plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300)
+plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300, bbox_inches="tight", pad_inches=0.05)
 
 #remove a hashtag from the next line if you want to see the map and add # to the next line
 #plt.show()
