@@ -6,7 +6,7 @@ This project analyses police-recorded injury road traffic collisions in Northern
 
 The script:
 - loads collision, casualty and vehicle CSV files
-- create spatial points data from collision coordinates
+- creates spatial point data from collision coordinates
 - loads Northern Ireland outline and district shapefiles
 - joins data to district boundaries
 - creates maps, graphs and summary tables
@@ -40,7 +40,7 @@ https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-loc
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 
-Place them in the **data** folder:
+Place full shapefile set in the **data** folder (including .shp, .shx, .dbf, .prj files):
 
 - ni_outline.shp
 - ni_districts.shp

@@ -7,7 +7,7 @@ import matplotlib.patches as mpatches
 # Select year for your analysis
 YEAR = 2025
 
-# Create file paths and ensure output folder exist
+# Create file paths and ensure the outputs folder exists
 DATA_DIR = Path("data")
 OUTPUT_DIR = Path("outputs")
 OUTPUT_DIR.mkdir(exist_ok=True)
