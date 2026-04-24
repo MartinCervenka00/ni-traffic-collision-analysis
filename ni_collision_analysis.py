@@ -116,7 +116,7 @@ def add_map_elements(
 
 # Creating a Choropleth map using fatal collisions percentage per district
 def create_choropleth_map(districts, severity_table, outline, output_dir, year,
-                          column_name, legend_label, map_title, output_filename, cmap):
+                          column_name, legend_label, map_title, formula_text, output_filename, cmap):
     """
     Create a choropleth map showing a selected collision severity metric by district.
 
@@ -166,8 +166,13 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     # Plot NI outline on top
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
-    # Add title and axis styling
-    ax.set_title(f"{map_title} ({year})", pad=16)
+    # Main title
+    ax.set_title(f"{map_title} ({year})", fontsize=12, pad=16)
+
+    # Second title with formula
+    ax.text(0.5, 1.01, formula_text, transform=ax.transAxes, ha="center", va="bottom", fontsize=9)
+
+    # Axis styling
     ax.tick_params(axis="both", labelsize=8)
 
     # Add dashed grid
@@ -499,6 +504,7 @@ create_choropleth_map(
     "fatal_percentage",
     "Fatal collisions (%)",
     "Percentage of Fatal Collisions by District",
+    "Fatal ÷ Total collisions x 100",
     f"{YEAR}_MAP_fatal_percentage_choropleth.png",
     "Reds"
 )
@@ -514,6 +520,7 @@ create_choropleth_map(
     "serious_percentage",
     "Serious collisions (%)",
     "Percentage of Serious Collisions by District",
+    "Serious ÷ Total collisions x 100",
     f"{YEAR}_MAP_serious_percentage_choropleth.png",
     "Oranges"
 )
@@ -529,6 +536,7 @@ create_choropleth_map(
     "slight_percentage",
     "Slight collisions (%)",
     "Percentage of Slight Collisions by District",
+    "Slight ÷ Total collisions x 100",
     f"{YEAR}_MAP_slight_percentage_choropleth.png",
     "YlGn"
 )
@@ -544,6 +552,7 @@ create_choropleth_map(
     "serious_to_slight_ratio",
     "Serious to slight ratio",
     "Serious-to-Slight Collision Ratio by District",
+    "Serious collisions ÷ Slight collisions",
     f"{YEAR}_MAP_serious_to_slight_ratio_choropleth.png",
     "Purples"
 )

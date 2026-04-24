@@ -72,13 +72,10 @@ conda activate ni-collisions
     - `ni-traffic-collision-analysis`
 3. Make sure the correct interpreter is selected:
    - `File > Settings > Python Interpreter`
-
 4. Choose the conda environment:
    - `ni-collisions`
-
 5. In the Project panel, open:
    - `ni_collision_analysis.py`
-   
 6. Change the year in the script if required:
 
 ```python
