@@ -539,7 +539,7 @@ create_choropleth_map(
     "Percentage of Serious Collisions by District",
     "Serious ÷ Total collisions x 100",
     f"{YEAR}_MAP_serious_percentage_choropleth.png",
-    "Oranges"
+    "Wistia"
 )
 print(f"{YEAR} MAP serious_percentage_choropleth created")
 
