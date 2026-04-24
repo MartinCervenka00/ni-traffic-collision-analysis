@@ -55,14 +55,14 @@ By clicking the green **Code** button on the top of this page, three options are
 
    The repository may also be cloned using:
 
-```python
-git clone http://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
+```bash
+git clone https://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
 cd ni-traffic-collision-analysis 
 ```
 ## Environment
 A conda environment is used to guarantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
 
-```python
+```bash
 conda env create -f environment.yml
 conda activate ni-collisions
 ```
