@@ -149,7 +149,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     districts_metric.plot(
         column=column_name,
         cmap=cmap,
-        linewidth=0.8,
+        linewidth=0.4,
         edgecolor="black",
         legend=True,
         legend_kwds={
