@@ -578,3 +578,5 @@ print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 # Use this to see text for docstring
 # change the name of the function
 # print(add_map_elements.__doc__)
+
+# End of the script
