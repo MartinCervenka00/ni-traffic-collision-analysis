@@ -186,9 +186,9 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     add_map_elements(ax)
 
     # Save map
-    plt.tight_layout()
+    plt.tight_layout(rect=[0.02,0.04, 0.98, 0.95])
     plt.savefig(
-        output_dir / output_filename, dpi=300)
+        output_dir / output_filename, dpi=300, bbox_inches="tight", pad_inches=0.03)
 
     plt.close()
 
