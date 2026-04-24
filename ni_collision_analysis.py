@@ -166,6 +166,10 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     # Plot NI outline on top
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
+    outline_patch = mpatches.Patch(edgecolor="black", facecolor="none",label="NI Outline")
+    district_patch = mpatches.Patch(edgecolor="black", facecolor="none", linewidth=0.5, label="District Boundaries")
+    ax.legend(handles=[outline_patch, district_patch],loc="upper left")
+
     # Main title
     ax.set_title(f"{map_title} ({year})", fontsize=12, pad=16)
 
