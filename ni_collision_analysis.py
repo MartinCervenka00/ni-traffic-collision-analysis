@@ -308,19 +308,31 @@ collisions_gdf = gpd.GeoDataFrame(
 outline = outline.to_crs(epsg=29901)
 districts = districts.to_crs(epsg=29901)
 
-# Area is being plotted for both ni outline, districts and collision
+# Area is being plotted for both ni outline and districts
 fig, ax = plt.subplots(figsize=(8, 6))
 outline.plot(ax=ax, facecolor="none", edgecolor="black")
 districts.plot(ax=ax, facecolor="none", edgecolor="blue")
-collisions_gdf.plot(ax=ax, color="red", markersize=1)
 
-# Adding legend to the map
+# Plot collision points by severity
+fatal_points = collisions_gdf[collisions_gdf["a_type"] == 1]
+serious_points = collisions_gdf[collisions_gdf["a_type"] == 2]
+slight_points = collisions_gdf[collisions_gdf["a_type"] == 3]
 
+# Plot slight first
+slight_points.plot(ax=ax, color="yellowgreen", markersize=1)
+serious_points.plot(ax=ax, color="orange", markersize=2)
+fatal_points.plot(ax=ax, color="maroon", markersize=3)
+
+# Boundaries legend
 outline_patch = mpatches.Patch(edgecolor="black", facecolor="none", label="NI Outline")
 district_patch = mpatches.Patch(edgecolor="blue", facecolor="none", label="Districts")
-collision_patch = mpatches.Patch(color="red", label="Collisions")
 
-ax.legend(handles=[outline_patch, district_patch, collision_patch],
+# Collisions legend
+fatal_patch = mpatches.Patch(color="maroon", label="Fatal")
+serious_patch = mpatches.Patch(color="orange", label="Serious")
+slight_patch = mpatches.Patch(color="yellowgreen", label="Slight")
+
+ax.legend(handles=[outline_patch, district_patch, fatal_patch, serious_patch, slight_patch],
           loc="upper left",
           bbox_to_anchor=(0.01, 0.99)
 )
