@@ -101,7 +101,7 @@ Process finished with exit code 0
 
 ## Outputs
 
-Results are saved in the **output** folder as PNG charts/maps and CSV summary tables.
+Results are saved in the **outputs** folder as PNG charts/maps and CSV summary tables.
 
 ### District Summary Table
 
