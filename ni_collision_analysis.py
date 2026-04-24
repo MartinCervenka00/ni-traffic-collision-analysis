@@ -310,8 +310,9 @@ districts = districts.to_crs(epsg=29901)
 
 # Area is being plotted for both ni outline and districts
 fig, ax = plt.subplots(figsize=(8, 6))
-outline.plot(ax=ax, facecolor="none", edgecolor="black")
-districts.plot(ax=ax, facecolor="none", edgecolor="blue")
+districts.plot(ax=ax, facecolor="none", edgecolor="grey", linewidth=0.4)
+outline.plot(ax=ax, facecolor="none", edgecolor="black", linewidth=1)
+
 
 # Plot collision points by severity
 fatal_points = collisions_gdf[collisions_gdf["a_type"] == 1]
@@ -325,7 +326,7 @@ fatal_points.plot(ax=ax, color="maroon", markersize=3)
 
 # Boundaries legend
 outline_patch = mpatches.Patch(edgecolor="black", facecolor="none", label="NI Outline")
-district_patch = mpatches.Patch(edgecolor="blue", facecolor="none", label="Districts")
+district_patch = mpatches.Patch(edgecolor="grey", facecolor="none", label="Districts")
 
 # Collisions legend
 fatal_patch = mpatches.Patch(color="maroon", label="Fatal")
