@@ -381,7 +381,7 @@ casualties = pd.read_csv(CASUALTY_CSV)
 print(f"{YEAR} DATA Casualties loaded")
 
 # Casualties will be joined with collisions data
-collision_casualty = collisions.merge(casualties, on="a_ref", how="left")
+collision_casualty = collisions.merge(casualties, on="a_ref", how="inner")
 
 # Dataset is converted into a GeoDataFrame using Easting and Northing from collision
 casualties_gdf = gpd.GeoDataFrame(
@@ -414,7 +414,7 @@ vehicles = pd.read_csv(VEHICLE_CSV)
 print(f"{YEAR} DATA Vehicles loaded")
 
 # Joining vehicles dataset with collisions data
-collision_vehicle = collisions.merge(vehicles, on="a_ref", how="left")
+collision_vehicle = collisions.merge(vehicles, on="a_ref", how="inner")
 
 # Using GeoPandas to convert vehicle data into spatial points using Easting and Northing from collision dataset
 vehicles_gdf = gpd.GeoDataFrame(
