@@ -81,16 +81,8 @@ conda activate ni-collisions
 ```python
 YEAR = 2025
 ```
-The script will automatically load:
-- collision2025.csv
-- casualty2025.csv
-- vehicle2025.csv
-
 7. Click the green **Run** button in the top-right corner of PyCharm.
-
-
 8. If successful, the terminal should show:
-
 
 ```text
 Process finished with exit code 0
