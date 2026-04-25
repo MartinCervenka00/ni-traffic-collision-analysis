@@ -33,7 +33,7 @@ def get_year_file_paths(data_dir, year):
 # File paths for collision, casualty and vehicle data - for selected year
 COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
 
-# Creating function for elements in the maps
+# Creating function to add north arrow, scale bar and source text to maps
 def add_map_elements(
         ax,
         source_text="Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
@@ -301,7 +301,8 @@ collisions = pd.read_csv(COLLISION_CSV)
 
 print(f"{YEAR} DATA Collision loaded")
 
-# Creating collision points (TM65 Irish Grid - EPSG = 29901, where a_gd1 = Easting and a_gd2 = Northing)
+# Creating collision points location using Easting (a_gd1) and Northing a_gd2)
+# CRS: TM65 Irish Grid (EPSG = 29901)
 collisions_gdf = gpd.GeoDataFrame(
     collisions,
     geometry=gpd.points_from_xy(collisions["a_gd1"], collisions["a_gd2"]),
@@ -312,7 +313,7 @@ collisions_gdf = gpd.GeoDataFrame(
 outline = outline.to_crs(epsg=29901)
 districts = districts.to_crs(epsg=29901)
 
-# Area is being plotted for both ni outline and districts
+# Plot NI outline and districts boundaries
 fig, ax = plt.subplots(figsize=(9, 6.5))
 districts.plot(ax=ax, facecolor="none", edgecolor="grey", linewidth=0.4)
 outline.plot(ax=ax, facecolor="none", edgecolor="black", linewidth=1)
@@ -323,7 +324,7 @@ fatal_points = collisions_gdf[collisions_gdf["a_type"] == 1]
 serious_points = collisions_gdf[collisions_gdf["a_type"] == 2]
 slight_points = collisions_gdf[collisions_gdf["a_type"] == 3]
 
-# Plot slight first
+# Plot slight collision first so serious and fatal points appear on top
 slight_points.plot(ax=ax, color="yellowgreen", markersize=1)
 serious_points.plot(ax=ax, color="orange", markersize=2)
 fatal_points.plot(ax=ax, color="maroon", markersize=3)
@@ -349,7 +350,7 @@ add_map_elements(ax)
 
 plt.title(f"Total road traffic collisions in Northern Ireland ({YEAR})")
 
-# Save image to output directory
+# Save collision severity point map
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300, bbox_inches="tight", pad_inches=0.05)
 
 #remove a hashtag from the next line if you want to see the map and add # to the next line
@@ -375,7 +376,7 @@ create_bar_chart(
     f"{YEAR}_GRAPH_collisions_by_district.png"
 )
 
-# Next part will load casualty data for selected year
+# Load casualty data for the selected year
 casualties = pd.read_csv(CASUALTY_CSV)
 
 print(f"{YEAR} DATA Casualties loaded")
@@ -408,7 +409,7 @@ create_bar_chart(
     color="green"
 )
 
-# Loading vehicles to the code (using Pandas library)
+# Load vehicle data for the selected year
 vehicles = pd.read_csv(VEHICLE_CSV)
 
 print(f"{YEAR} DATA Vehicles loaded")
@@ -423,7 +424,7 @@ vehicles_gdf = gpd.GeoDataFrame(
     crs="EPSG:29901"
 )
 
-# Using spatial join with districts shapefile
+# Spatially join vehicle points to district boundaries
 joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
 
 # Create grouped series for vehicle graph
@@ -485,7 +486,7 @@ severity_table["slight_percentage"] = (severity_table["slight"] / severity_table
 severity_table["serious_to_slight_ratio"] = (severity_table["serious"] / severity_table["slight"].replace(0, pd.NA)
                                              ).round(3)
 
-# save to csv
+# save severity summary table to csv
 severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_TABLE_severity_by_district.csv")
 print(f"{YEAR} TABLE Severity_by_district.csv created")
 
@@ -579,4 +580,4 @@ print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 # change the name of the function
 # print(add_map_elements.__doc__)
 
-# End of the script
+# End of script
