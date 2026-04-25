@@ -118,7 +118,7 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 | Fermanagh and Omagh | 283 | 447 | 513 |
 | **TOTAL** | **5015** | **7879** | **9394** |
 
-### Collision Locations
+### Collisions Locations
 ![Collision Locations](outputs/2025_MAP_collisions.png)
 
 ### Casualties by District
