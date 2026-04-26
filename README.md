@@ -88,7 +88,7 @@ YEAR = 2025
 Process finished with exit code 0
 ```
 
-## Outputs
+## Outputs for year 2025
 
 Results are saved in the **outputs** folder as PNG charts/maps and CSV summary tables.
 
@@ -122,7 +122,7 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ### Vehicles by District
 ![Vehicles by District](outputs/2025_GRAPH_vehicles_by_district.png)
 
-## Collision Severity by District (2025)
+## Collision Severity by District
 
 | District | Fatal | Serious | Slight | Total | Fatal % | Serious % | Slight % | Serious/Slight Ratio |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
