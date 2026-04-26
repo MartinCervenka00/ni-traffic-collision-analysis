@@ -26,29 +26,8 @@ share/python-wheels/
 MANIFEST
 
 
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py.cover
-.hypothesis/
 .pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
 
 # IPython
 profile_default/
@@ -68,16 +47,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -89,19 +58,5 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
-
-
-
 # Ruff stuff:
 .ruff_cache/
-
-# PyPI configuration file
-.pypirc
-
