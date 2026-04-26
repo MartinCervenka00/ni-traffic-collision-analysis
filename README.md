@@ -122,7 +122,7 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ### Vehicles by District
 ![Vehicles by District](outputs/2025_GRAPH_vehicles_by_district.png)
 
-## Collision Severity by District
+### Collision Severity by District
 
 | District | Fatal | Serious | Slight | Total | Fatal % | Serious % | Slight % | Serious/Slight Ratio |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -153,6 +153,8 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ### Serious to Slight Ratio by District
 ![Serious to Slight Ratio by District](outputs/2025_MAP_serious_to_slight_ratio_choropleth.png)
 
+### Older Driver Collision Hotspot (65+)
+![Older Driver Collision Hotspot](outputs/2025_MAP_ni_older_driver_hotspot.png)
 
 ## Notes
 
