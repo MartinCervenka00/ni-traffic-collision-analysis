@@ -291,6 +291,65 @@ def create_bar_chart(series, output_dir, year,
 
     print(f"{year} GRAPH {title} created")
 
+def create_ni_older_driver_hotspot(joined_vehicles, districts, output_dir, year):
+    """
+    Create a hotspot-style map for older drivers aged 65+ in Northern Ireland.
+
+    The PSNI data uses age groups, so age group 8 represents drivers aged 65+.
+    """
+
+    # Filter all NI older drivers (65+)
+    ni_older = joined_vehicles[
+        joined_vehicles["v_agegroup"] == 8
+    ]
+
+    fig, ax = plt.subplots(figsize=(9, 6.5))
+
+    # Plot all district boundaries
+    districts.plot(
+        ax=ax,
+        facecolor="none",
+        edgecolor="grey",
+        linewidth=0.4
+    )
+
+    # Plot NI outline
+    outline.boundary.plot(
+        ax=ax,
+        color="black",
+        linewidth=1
+    )
+
+    # Create hotspot using hexbin density
+    if not ni_older.empty:
+        x = ni_older.geometry.x
+        y = ni_older.geometry.y
+
+        hb = ax.hexbin(
+            x,
+            y,
+            gridsize=45,
+            cmap="Greens",
+            mincnt=1,
+            linewidths=0.2
+        )
+
+        plt.colorbar(hb, ax=ax, label="Older driver collision density")
+
+    ax.set_title(f"Northern Ireland Older Driver Collision Hotspot 65+ ({year})")
+    ax.tick_params(axis="both", labelsize=8)
+
+    add_map_elements(ax)
+
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / f"{year}_MAP_ni_older_driver_hotspot.png",
+        dpi=300,
+        bbox_inches="tight"
+    )
+    plt.close()
+
+    print(f"{year} MAP NI older driver hotspot created")
 
 # Load shapefiles - NI outline, NI districts
 outline = gpd.read_file(DATA_DIR/"ni_outline.shp")
@@ -426,6 +485,14 @@ vehicles_gdf = gpd.GeoDataFrame(
 
 # Spatially join vehicle points to district boundaries
 joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
+
+# NI older driver hotspot map (65+)
+create_ni_older_driver_hotspot(
+    joined_vehicles,
+    districts,
+    OUTPUT_DIR,
+    YEAR
+)
 
 # Create grouped series for vehicle graph
 vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(ascending=False)
