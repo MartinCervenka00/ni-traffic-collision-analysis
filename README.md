@@ -7,13 +7,16 @@ This project analyses police-recorded injury road traffic collisions in Northern
 The script:
 - loads collision, casualty and vehicle CSV files
 - creates spatial point data from collision coordinates
-- loads Northern Ireland outline and district shapefiles
-- joins data to district boundaries
-- creates maps, graphs and summary tables
+- loads Northern Ireland outline and district boundary shapefiles
+- spatially joins collision data to district boundaries
+- creates maps, charts and summary tables
 - saves outputs as CSV and PNG files
 
 The script can be used for any available year from **2013** to **2025**.
 
+With the relevant collision data saved in the **data** folder, 
+simply change the year at the top of the script and all results 
+will be automatically saved for that selected year in the **outputs** folder.
 
 ## Data Download
 
@@ -66,8 +69,8 @@ A conda environment is used to guarantee that all required dependencies are inst
 conda env create -f environment.yml
 conda activate ni-collisions
 ```
-## Run the Script in PyCharm
-1. Open PyCharm
+## Run the Script in IDE (PyCharm, VS Code, Spyder, etc.)
+1. Open PyCharm or another Python IDE
 2. Select **Open Project** and choose the project folder:
     - `ni-traffic-collision-analysis`
 3. Make sure the correct interpreter is selected:
@@ -88,7 +91,7 @@ YEAR = 2025
 Process finished with exit code 0
 ```
 
-## Outputs for year 2025
+## Example Outputs (2025)
 
 Results are saved in the **outputs** folder as PNG charts/maps and CSV summary tables.
 
@@ -110,7 +113,7 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 | Fermanagh and Omagh | 283 | 447 | 513 |
 | **TOTAL** | **5015** | **7879** | **9394** |
 
-### Collisions Locations
+### Collision Locations
 ![Collision Locations](outputs/2025_MAP_collisions.png)
 
 ### Casualties by District
@@ -153,8 +156,11 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ### Serious to Slight Ratio by District
 ![Serious to Slight Ratio by District](outputs/2025_MAP_serious_to_slight_ratio_choropleth.png)
 
+### Young Driver Collision Hotspot (17–24)
+![Young Driver Collision Hotspot](outputs/2025_MAP_young_driver_17_24_hotspot.png)
+
 ### Older Driver Collision Hotspot (65+)
-![Older Driver Collision Hotspot](outputs/2025_MAP_ni_older_driver_hotspot.png)
+![Older Driver Collision Hotspot](outputs/2025_MAP_older_driver_65_plus_hotspot.png)
 
 ## Notes
 
@@ -167,3 +173,4 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ## Author
 
 Martin Cervenka, Ulster University
+Created for the Programming for GIS and Remote Sensing module

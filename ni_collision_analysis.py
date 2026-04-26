@@ -291,65 +291,62 @@ def create_bar_chart(series, output_dir, year,
 
     print(f"{year} GRAPH {title} created")
 
-def create_ni_older_driver_hotspot(joined_vehicles, districts, output_dir, year):
+def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_dir, year,
+                                   agegroup_code, agegroup_label, output_name):
     """
-    Create a hotspot-style map for older drivers aged 65+ in Northern Ireland.
+    Create a hotspot-style map for collisions involving a selected driver age group.
 
-    The PSNI data uses age groups, so age group 8 represents drivers aged 65+.
+    Parameters:
+    - joined_vehicles: vehicle points joined to district boundaries
+    - districts: GeoDataFrame of district boundaries
+    - outline: GeoDataFrame of Northern Ireland outline
+    - output_dir: folder where the map will be saved
+    - year: selected year for analysis
+    - agegroup_code: driver age group code
+    - agegroup_label: label used in the map title
+    - output_name: name used for the output file
+
+    Returns:
+    - saves a PNG hotspot map in the outputs folder
     """
 
-    # Filter all NI older drivers (65+)
-    ni_older = joined_vehicles[
-        joined_vehicles["v_agegroup"] == 8
+    driver_group = joined_vehicles[
+        joined_vehicles["v_agegroup"] == agegroup_code
     ]
 
     fig, ax = plt.subplots(figsize=(9, 6.5))
 
-    # Plot all district boundaries
-    districts.plot(
-        ax=ax,
-        facecolor="none",
-        edgecolor="grey",
-        linewidth=0.4
-    )
+    districts.plot(ax=ax, facecolor="#e6e6e6", edgecolor="grey", linewidth=0.4)
+    outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
-    # Plot NI outline
-    outline.boundary.plot(
-        ax=ax,
-        color="black",
-        linewidth=1
-    )
-
-    # Create hotspot using hexbin density
-    if not ni_older.empty:
-        x = ni_older.geometry.x
-        y = ni_older.geometry.y
+    if not driver_group.empty:
+        x = driver_group.geometry.x
+        y = driver_group.geometry.y
 
         hb = ax.hexbin(
             x,
             y,
             gridsize=45,
-            cmap="Greens",
-            mincnt=1,
-            linewidths=0.2
+            cmap="YlOrRd",
+            mincnt=1
         )
 
-        plt.colorbar(hb, ax=ax, label="Older driver collision density")
+        plt.colorbar(hb, ax=ax, label="Collision density")
 
-    ax.set_title(f"Northern Ireland Older Driver Collision Hotspot 65+ ({year})")
+    ax.set_title(f"{agegroup_label} Driver Collision Hotspot ({year})")
     ax.tick_params(axis="both", labelsize=8)
 
     add_map_elements(ax)
 
     plt.tight_layout()
     plt.savefig(
-        output_dir / f"{year}_MAP_ni_older_driver_hotspot.png",
+        output_dir / f"{year}_MAP_{output_name}.png",
         dpi=300,
         bbox_inches="tight"
     )
     plt.close()
 
-    print(f"{year} MAP NI older driver hotspot created")
+    print(f"{year} MAP {output_name} created")
 
 # Load shapefiles - NI outline, NI districts
 outline = gpd.read_file(DATA_DIR/"ni_outline.shp")
@@ -374,7 +371,7 @@ districts = districts.to_crs(epsg=29901)
 
 # Plot NI outline and districts boundaries
 fig, ax = plt.subplots(figsize=(9, 6.5))
-districts.plot(ax=ax, facecolor="none", edgecolor="grey", linewidth=0.4)
+districts.plot(ax=ax, facecolor="#e6e6e6", edgecolor="grey", linewidth=0.4)
 outline.plot(ax=ax, facecolor="none", edgecolor="black", linewidth=1)
 
 
@@ -486,12 +483,28 @@ vehicles_gdf = gpd.GeoDataFrame(
 # Spatially join vehicle points to district boundaries
 joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
 
-# NI older driver hotspot map (65+)
-create_ni_older_driver_hotspot(
+# Create hotspot map for young drivers (17-24)
+create_driver_agegroup_hotspot(
     joined_vehicles,
     districts,
+    outline,
     OUTPUT_DIR,
-    YEAR
+    YEAR,
+    agegroup_code=3,
+    agegroup_label="Young 17-24",
+    output_name="young_driver_17_24_hotspot"
+)
+
+# Create hotspot map for older drivers (65+)
+create_driver_agegroup_hotspot(
+    joined_vehicles,
+    districts,
+    outline,
+    OUTPUT_DIR,
+    YEAR,
+    agegroup_code=8,
+    agegroup_label="Older 65+",
+    output_name="older_driver_65_plus_hotspot"
 )
 
 # Create grouped series for vehicle graph
@@ -644,7 +657,7 @@ create_choropleth_map(
 print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 
 # Use this to see text for docstring
-# change the name of the function
-# print(add_map_elements.__doc__)
+# change the name of the function (and remove #)
+# print(create_driver_agegroup_hotspot.__doc__)
 
 # End of script
