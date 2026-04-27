@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 # Select year for your analysis
-YEAR = 2023
+YEAR = 2025
 
 # Create file paths and ensure the outputs folder exists
 DATA_DIR = Path("data")
@@ -46,8 +46,8 @@ def add_map_elements(ax,
     - source_text: text shown at bottom of figure
     - scale_length: scale bar length in metres (EPSG:29901 uses metres)
 
-    Example:
-    add_map_elements(ax)
+    Returns:
+    - None. Adds map elements directly to the matplotlib axis (add_map_elements(ax))
     """
 
     # North arrow
