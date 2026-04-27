@@ -34,11 +34,10 @@ def get_year_file_paths(data_dir, year):
 COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
 
 # Creating function to add north arrow, scale bar and source text to maps
-def add_map_elements(
-        ax,
-        source_text="Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
-        scale_length=20000
-):
+def add_map_elements(ax,
+                     source_text="Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
+                     scale_length=20000):
+
     """
     Add north arrow, source text and scale bar to a map.
 
@@ -117,6 +116,7 @@ def add_map_elements(
 # Creating a Choropleth map using fatal collisions percentage per district
 def create_choropleth_map(districts, severity_table, outline, output_dir, year,
                           column_name, legend_label, map_title, formula_text, output_filename, cmap):
+
     """
     Create a choropleth map showing a selected collision severity metric by district.
 
@@ -126,6 +126,12 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     - outline: GeoDataFrame of Northern Ireland outline
     - output_dir: folder where the output image will be saved
     - year: selected year for analysis
+    - column_name: name of the data column to map
+    - legend_label: label show on the colour legend
+    - map_title: main title of the map
+    - formula_text: formula show below the title
+    - output_filename: name of the png output file
+    - cmap: colour map used for shading districts
 
     Returns:
     - saves a PNG map in the outputs folder
@@ -192,16 +198,21 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
 
     plt.close()
 
-def create_combined_district_table(
-    collisions_joined,
-    casualties_joined,
-    vehicles_joined,
-    output_dir,
-    year
-):
+def create_combined_district_table(collisions_joined, casualties_joined,
+                                   vehicles_joined, output_dir, year):
     """
     Create one district summary table with collision, casualty and vehicle counts,
     plus a TOTAL row, and save it as a CSV file.
+
+    Parameters:
+    - collisions_joined: GeoDataFrame of collisions joined to districts
+    - casualties_joined: GeoDataFrame of casualties joined to districts
+    - vehicles_joined: GeoDataFrame of vehicles joined to districts
+    - output_dir: folder where the CSV file will be saved
+    - year: selected year for analysis
+
+    Returns:
+    - combined_table: DataFrame containing district totals and overall total row
     """
 
     collisions_count = (
@@ -409,8 +420,8 @@ plt.title(f"Total road traffic collisions in Northern Ireland ({YEAR})")
 # Save collision severity point map
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300, bbox_inches="tight", pad_inches=0.05)
 
-#remove a hashtag from the next line if you want to see the map and add # to the next line
-#plt.show()
+# Remove the # from the next line if you want to see the map and add # to the next line
+# plt.show()
 plt.close()
 
 print(f"{YEAR} MAP total collisions in NI created")
@@ -658,6 +669,6 @@ print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 
 # Use this to see text for docstring
 # change the name of the function (and remove #)
-# print(create_driver_agegroup_hotspot.__doc__)
+print(create_combined_district_table.__doc__)
 
 # End of script
