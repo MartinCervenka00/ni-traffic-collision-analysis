@@ -26,7 +26,7 @@ https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-coll
 
 Download these three CSV files:
 
-- collision2025.csv
+- collision2025.csv 
 - casualty2025.csv
 - vehicle2025.csv
 
@@ -84,7 +84,7 @@ conda activate ni-collisions
 ```python
 YEAR = 2025
 ```
-7. Click the green **Run** button in the top-right corner of PyCharm.
+7. Click the **Run** button in the top-right corner of PyCharm.
 8. If successful, the terminal should show:
 
 ```text
@@ -141,19 +141,19 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 | Mid and East Antrim | 2 | 60 | 228 | 290 | 0.69 | 20.69 | 78.62 | 0.263 |
 | Newry, Mourne and Down | 6 | 114 | 371 | 491 | 1.22 | 23.22 | 75.56 | 0.307 |
 
-### Fatal Percentage by District
-![Fatal Percentage by District](outputs/2025_MAP_fatal_percentage_choropleth.png)
-
-### Serious Percentage by District
-![Serious Percentage by District](outputs/2025_MAP_serious_percentage_choropleth.png)
-
-### Slight Percentage by District
-![Slight Percentage by District](outputs/2025_MAP_slight_percentage_choropleth.png)
-
 ### Collision Severity by District
 ![Collision Severity by District](outputs/2025_GRAPH_severity_by_district.png)
 
-### Serious to Slight Ratio by District
+### Percentage of Fatal Collisions by District
+![Fatal Percentage by District](outputs/2025_MAP_fatal_percentage_choropleth.png)
+
+### Percentage of Serious Collisions by District
+![Serious Percentage by District](outputs/2025_MAP_serious_percentage_choropleth.png)
+
+### Percentage of Slight Collisions by District
+![Slight Percentage by District](outputs/2025_MAP_slight_percentage_choropleth.png)
+
+### Serious to Slight Collision Ratio by District
 ![Serious to Slight Ratio by District](outputs/2025_MAP_serious_to_slight_ratio_choropleth.png)
 
 ### Young Driver Collision Hotspot (17–24)
@@ -172,5 +172,5 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 
 ## Author
 
-Martin Cervenka, Ulster University
+Martin Cervenka, Ulster University,
 Created for the Programming for GIS and Remote Sensing module
