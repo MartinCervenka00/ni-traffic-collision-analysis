@@ -127,10 +127,10 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     - output_dir: folder where the output image will be saved
     - year: selected year for analysis
     - column_name: name of the data column to map
-    - legend_label: label show on the colour legend
+    - legend_label: label shown on the colour legend
     - map_title: main title of the map
-    - formula_text: formula show below the title
-    - output_filename: name of the png output file
+    - formula_text: formula shown below the title
+    - output_filename: name of the PNG output file
     - cmap: colour map used for shading districts
 
     Returns:
@@ -420,7 +420,7 @@ plt.title(f"Total road traffic collisions in Northern Ireland ({YEAR})")
 # Save collision severity point map
 plt.savefig(OUTPUT_DIR / f"{YEAR}_MAP_collisions.png", dpi=300, bbox_inches="tight", pad_inches=0.05)
 
-# Remove the # from the next line if you want to see the map and add # to the next line
+# Remove the # from plt.show() if you want to see the map and add # to the next line
 # plt.show()
 plt.close()
 
@@ -568,20 +568,20 @@ severity_table["total"] = (
     severity_table["slight"]
 )
 
-# calculate percentages
+# Calculate percentages
 severity_table["fatal_percentage"] = (severity_table["fatal"] / severity_table["total"] * 100).round(2)
 severity_table["serious_percentage"] = (severity_table["serious"] / severity_table["total"] * 100).round(2)
 severity_table["slight_percentage"] = (severity_table["slight"] / severity_table["total"] * 100).round(2)
 
-# calculate ratio (avoid division by zero)
+# Calculate ratio (avoid division by zero)
 severity_table["serious_to_slight_ratio"] = (severity_table["serious"] / severity_table["slight"].replace(0, pd.NA)
                                              ).round(3)
 
-# save severity summary table to csv
+# Save severity summary table to csv
 severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_TABLE_severity_by_district.csv")
 print(f"{YEAR} TABLE Severity_by_district.csv created")
 
-# create bar chart - Collision Severity by District
+# Create bar chart - Collision Severity by District
 severity_table[["fatal", "serious", "slight"]].plot(
     kind="bar",
     stacked=True,
@@ -666,9 +666,5 @@ create_choropleth_map(
     "Purples"
 )
 print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
-
-# Use this to see text for docstring
-# change the name of the function (and remove #)
-print(create_combined_district_table.__doc__)
 
 # End of script
