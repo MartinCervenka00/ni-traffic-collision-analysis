@@ -43,7 +43,7 @@ https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-loc
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 
-Place full shapefile set in the **data** folder (including .shp, .shx, .dbf, .prj files):
+Place full shapefile set in the **data** folder and rename the main .sph files as:
 
 - ni_outline.shp
 - ni_districts.shp
@@ -63,7 +63,7 @@ git clone https://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
 cd ni-traffic-collision-analysis 
 ```
 ## Environment
-A conda environment is used to guarantee that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
+A conda environment is used to help that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
 
 ```bash
 conda env create -f environment.yml
@@ -173,4 +173,4 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ## Author
 
 Martin Cervenka, Ulster University,
-Created for the Programming for GIS and Remote Sensing module
+Created for the EGM 722 Programming for GIS and Remote Sensing module
