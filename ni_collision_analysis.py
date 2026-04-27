@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 # Select year for your analysis
-YEAR = 2025
+YEAR = 2023
 
 # Create file paths and ensure the outputs folder exists
 DATA_DIR = Path("data")
