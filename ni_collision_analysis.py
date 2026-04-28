@@ -151,7 +151,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     # Axis styling
     ax.tick_params(axis="both", labelsize=8)
 
-    # Add dashed grid
+    # Add dashed gridlines
     plt.grid(axis="both", linestyle="--", alpha=0.4)
 
     # Add north arrow, source, scale
@@ -337,6 +337,9 @@ ax.legend(handles=[outline_patch, district_patch, fatal_patch, serious_patch, sl
 
 # Make coordinate numbers smaller
 ax.tick_params(axis="both", labelsize=8)
+
+# Add dashed gridlines
+plt.grid(axis="both", linestyle="--", alpha=0.4)
 
 # Adding north arrow, scale and source
 add_map_elements(ax)
