@@ -106,12 +106,26 @@ def add_map_elements(ax,
     )
 
     # Source text
-    plt.figtext(
-        0.10,
-        0.02,
-        source_text,
-        fontsize=8
-    )
+    plt.figtext(0.10,0.02,source_text,fontsize=8)
+
+## Adding boundary legend to the hotspot and choropleth maps
+def add_boundary_legend(ax, outline_label="NI Outline", district_label="District Boundaries"):
+    """
+    Add a boundary legend showing the NI outline and district boundaries.
+
+    Parameters:
+    - ax: matplotlib axis
+    - outline_label: label for the Northern Ireland outline
+    - district_label: label for district boundaries
+
+     Returns:
+    - None. Adds the legend directly to the matplotlib axis.
+
+    """
+
+    outline_patch = mpatches.Patch(edgecolor="black",facecolor="none",label=outline_label)
+    district_patch = mpatches.Patch(edgecolor="grey",facecolor="none",linewidth=0.5,label=district_label)
+    ax.legend(handles=[outline_patch, district_patch],loc="upper left")
 
 # Creating a Choropleth map using fatal collisions percentage per district
 def create_choropleth_map(districts, severity_table, outline, output_dir, year,
@@ -138,11 +152,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     """
 
     # Join severity values to district boundaries
-    districts_metric = districts.merge(
-        severity_table.reset_index(),
-        on="LGDNAME",
-        how="left"
-    )
+    districts_metric = districts.merge(severity_table.reset_index(),on="LGDNAME",how="left")
 
     # Make sure layers use the same CRS
     districts_metric = districts_metric.to_crs(epsg=29901)
@@ -152,29 +162,15 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     fig, ax = plt.subplots(figsize=(9, 6.5))
 
     # Plot districts using percentage
-    districts_metric.plot(
-        column=column_name,
-        cmap=cmap,
-        linewidth=0.4,
-        edgecolor="black",
-        legend=True,
-        legend_kwds={
-            "label": legend_label,
-            "shrink": 0.7
-        },
-        ax=ax,
-        missing_kwds={
-            "color": "lightgrey",
-            "label": "No data"
-        }
-    )
+    districts_metric.plot(column=column_name,cmap=cmap,linewidth=0.4,edgecolor="black",legend=True,
+                          legend_kwds={"label": legend_label,"shrink": 0.7},
+                          ax=ax,missing_kwds={"color": "lightgrey","label": "No data"})
 
     # Plot NI outline on top
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
 
-    outline_patch = mpatches.Patch(edgecolor="black", facecolor="none",label="NI Outline")
-    district_patch = mpatches.Patch(edgecolor="black", facecolor="none", linewidth=0.5, label="District Boundaries")
-    ax.legend(handles=[outline_patch, district_patch],loc="upper left")
+    # Add boundary legend
+    add_boundary_legend(ax)
 
     # Main title
     ax.set_title(f"{map_title} ({year})", fontsize=12, pad=16)
@@ -193,8 +189,7 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
 
     # Save map
     plt.tight_layout(rect=[0.02,0.04, 0.98, 0.95])
-    plt.savefig(
-        output_dir / output_filename, dpi=300, bbox_inches="tight", pad_inches=0.03)
+    plt.savefig(output_dir / output_filename, dpi=300, bbox_inches="tight", pad_inches=0.03)
 
     plt.close()
 
@@ -215,17 +210,15 @@ def create_combined_district_table(collisions_joined, casualties_joined,
     - combined_table: DataFrame containing district totals and overall total row
     """
 
-    collisions_count = (
-        collisions_joined.groupby("LGDNAME")
-        .size()
-        .rename("collision_count")
-    )
+    collisions_count = (collisions_joined.groupby("LGDNAME")
+                        .size()
+                        .rename("collision_count")
+                        )
 
-    casualties_count = (
-        casualties_joined.groupby("LGDNAME")
-        .size()
-        .rename("casualties_count")
-    )
+    casualties_count = (casualties_joined.groupby("LGDNAME")
+                        .size()
+                        .rename("casualties_count")
+                        )
 
     vehicles_count = (
         vehicles_joined.groupby("LGDNAME")
@@ -329,6 +322,9 @@ def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_d
 
     districts.plot(ax=ax, facecolor="#e6e6e6", edgecolor="grey", linewidth=0.4)
     outline.boundary.plot(ax=ax, color="black", linewidth=1)
+
+    # Adding boundary legend
+    add_boundary_legend(ax)
 
     if not driver_group.empty:
         x = driver_group.geometry.x
