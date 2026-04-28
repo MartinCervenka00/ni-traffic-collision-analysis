@@ -356,7 +356,7 @@ plt.close()
 print(f"{YEAR} MAP total collisions in NI created")
 
 # Creating spatial join - connect collisions to districts
-joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
+joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="intersects")
 
 # Create grouped series for collision graph
 by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
