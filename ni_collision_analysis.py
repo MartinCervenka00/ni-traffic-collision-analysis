@@ -51,20 +51,8 @@ def add_map_elements(ax,
     """
 
     # North arrow
-    ax.annotate(
-        "N",
-        xy=(0.93, 0.93),
-        xytext=(0.93, 0.85),
-        arrowprops=dict(
-            facecolor="black",
-            width=2,
-            headwidth=8
-        ),
-        ha="center",
-        va="center",
-        fontsize=10,
-        xycoords=ax.transAxes
-    )
+    ax.annotate("N",xy=(0.93, 0.93),xytext=(0.93, 0.85),arrowprops=dict(facecolor="black",width=2,headwidth=8),
+                ha="center",va="center",fontsize=10,xycoords=ax.transAxes)
 
     # Scale bar
     xmin, xmax = ax.get_xlim()
@@ -74,36 +62,18 @@ def add_map_elements(ax,
     y_start = ymin + (ymax - ymin) * 0.05
 
     # Main scale line
-    ax.plot(
-        [x_start, x_start + scale_length],
-        [y_start, y_start],
-        color="black",
-        linewidth=2
-    )
+    ax.plot([x_start, x_start + scale_length],
+            [y_start, y_start],color="black",linewidth=2)
 
     # End ticks
-    ax.plot(
-        [x_start, x_start],
-        [y_start - 500, y_start + 500],
-        color="black",
-        linewidth=2
-    )
+    ax.plot([x_start, x_start],[y_start - 500, y_start + 500],color="black",linewidth=2)
 
-    ax.plot(
-        [x_start + scale_length, x_start + scale_length],
-        [y_start - 500, y_start + 500],
-        color="black",
-        linewidth=2
-    )
+    ax.plot([x_start + scale_length, x_start + scale_length],
+            [y_start - 500, y_start + 500],color="black",linewidth=2)
 
     # Scale text
-    ax.text(
-        x_start + scale_length / 2,
-        y_start + 1200,
-        f"{int(scale_length / 1000)} km",
-        ha="center",
-        fontsize=9
-    )
+    ax.text(x_start + scale_length / 2, y_start + 1200,
+            f"{int(scale_length / 1000)} km", ha="center", fontsize=9)
 
     # Source text
     plt.figtext(0.10,0.02,source_text,fontsize=8)
@@ -210,33 +180,13 @@ def create_combined_district_table(collisions_joined, casualties_joined,
     - combined_table: DataFrame containing district totals and overall total row
     """
 
-    collisions_count = (collisions_joined.groupby("LGDNAME")
-                        .size()
-                        .rename("collision_count")
-                        )
-
-    casualties_count = (casualties_joined.groupby("LGDNAME")
-                        .size()
-                        .rename("casualties_count")
-                        )
-
-    vehicles_count = (
-        vehicles_joined.groupby("LGDNAME")
-        .size()
-        .rename("vehicles_count")
-    )
-
-    combined_table = pd.concat(
-        [collisions_count, casualties_count, vehicles_count],
-        axis=1
-    ).fillna(0)
-
+    collisions_count = (collisions_joined.groupby("LGDNAME").size().rename("collision_count"))
+    casualties_count = (casualties_joined.groupby("LGDNAME").size().rename("casualties_count"))
+    vehicles_count = (vehicles_joined.groupby("LGDNAME").size().rename("vehicles_count"))
+    combined_table = pd.concat([collisions_count, casualties_count, vehicles_count],
+                               axis=1).fillna(0)
     combined_table = combined_table.astype(int)
-
-    combined_table = combined_table.sort_values(
-        "collision_count",
-        ascending=False
-    )
+    combined_table = combined_table.sort_values("collision_count",ascending=False)
 
     total_row = pd.DataFrame({
         "collision_count": [combined_table["collision_count"].sum()],
@@ -246,13 +196,9 @@ def create_combined_district_table(collisions_joined, casualties_joined,
 
     combined_table = pd.concat([combined_table, total_row])
 
-    combined_table.to_csv(
-        output_dir / f"{year}_TABLE_collisions_casualties_vehicles_by_district.csv"
-    )
+    combined_table.to_csv(output_dir / f"{year}_TABLE_collisions_casualties_vehicles_by_district.csv")
 
-    print(
-        f"{year} TABLE collisions_casualties_vehicles_by_district.csv created"
-    )
+    print(f"{year} TABLE collisions_casualties_vehicles_by_district.csv created")
 
     return combined_table
 
@@ -279,10 +225,7 @@ def create_bar_chart(series, output_dir, year,
 
     plt.figure(figsize=(10, 6))
 
-    series.sort_values().plot(
-        kind="barh",
-        color=color
-    )
+    series.sort_values().plot(kind="barh",color=color)
 
     plt.title(f"{title} ({year})")
     plt.xlabel(xlabel)
@@ -314,9 +257,7 @@ def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_d
     - saves a PNG hotspot map in the outputs folder
     """
 
-    driver_group = joined_vehicles[
-        joined_vehicles["v_agegroup"] == agegroup_code
-    ]
+    driver_group = joined_vehicles[joined_vehicles["v_agegroup"] == agegroup_code]
 
     fig, ax = plt.subplots(figsize=(9, 6.5))
 
@@ -330,13 +271,7 @@ def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_d
         x = driver_group.geometry.x
         y = driver_group.geometry.y
 
-        hb = ax.hexbin(
-            x,
-            y,
-            gridsize=45,
-            cmap="YlOrRd",
-            mincnt=1
-        )
+        hb = ax.hexbin(x,y,gridsize=45,cmap="YlOrRd",mincnt=1)
 
         plt.colorbar(hb, ax=ax, label="Collision density")
 
@@ -348,11 +283,7 @@ def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_d
     add_map_elements(ax)
 
     plt.tight_layout()
-    plt.savefig(
-        output_dir / f"{year}_MAP_{output_name}.png",
-        dpi=300,
-        bbox_inches="tight"
-    )
+    plt.savefig(output_dir / f"{year}_MAP_{output_name}.png",dpi=300,bbox_inches="tight")
     plt.close()
 
     print(f"{year} MAP {output_name} created")
@@ -368,11 +299,9 @@ print(f"{YEAR} DATA Collision loaded")
 
 # Creating collision point locations using Easting (a_gd1) and Northing a_gd2)
 # CRS: TM65 Irish Grid (EPSG = 29901)
-collisions_gdf = gpd.GeoDataFrame(
-    collisions,
-    geometry=gpd.points_from_xy(collisions["a_gd1"], collisions["a_gd2"]),
-    crs="EPSG:29901"
-)
+collisions_gdf = gpd.GeoDataFrame(collisions,
+                                  geometry=gpd.points_from_xy(collisions["a_gd1"], collisions["a_gd2"]),
+                                  crs="EPSG:29901")
 
 # Match crs to collision data
 outline = outline.to_crs(epsg=29901)
@@ -404,9 +333,8 @@ serious_patch = mpatches.Patch(color="orange", label="Serious")
 slight_patch = mpatches.Patch(color="yellowgreen", label="Slight")
 
 ax.legend(handles=[outline_patch, district_patch, fatal_patch, serious_patch, slight_patch],
-          loc="upper left",
-          bbox_to_anchor=(0.01, 0.99)
-)
+          loc="upper left",bbox_to_anchor=(0.01, 0.99))
+
 # Make coordinate numbers smaller
 ax.tick_params(axis="both", labelsize=8)
 
@@ -431,15 +359,8 @@ joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
 by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Create graph for collisions by district
-create_bar_chart(
-    by_district,
-    OUTPUT_DIR,
-    YEAR,
-    "Number of Collisions by District",
-    "Collision Count",
-    "District",
-    f"{YEAR}_GRAPH_collisions_by_district.png"
-)
+create_bar_chart(by_district,OUTPUT_DIR,YEAR,"Number of Collisions by District","Collision Count",
+                "District",f"{YEAR}_GRAPH_collisions_by_district.png")
 
 # Load casualty data for the selected year
 casualties = pd.read_csv(CASUALTY_CSV)
@@ -450,11 +371,9 @@ print(f"{YEAR} DATA Casualties loaded")
 collision_casualty = collisions.merge(casualties, on="a_ref", how="inner")
 
 # Dataset is converted into a GeoDataFrame using Easting and Northing from collision
-casualties_gdf = gpd.GeoDataFrame(
-    collision_casualty,
-    geometry=gpd.points_from_xy(collision_casualty["a_gd1"], collision_casualty["a_gd2"]),
-    crs="EPSG:29901"
-)
+casualties_gdf = gpd.GeoDataFrame(collision_casualty,
+                                  geometry=gpd.points_from_xy(collision_casualty["a_gd1"], collision_casualty["a_gd2"]),
+                                  crs="EPSG:29901")
 
 # Use spatial join to districts boundaries
 joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate="within")
@@ -463,16 +382,8 @@ joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate=
 casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Creating casualties graph
-create_bar_chart(
-    casualties_by_district,
-    OUTPUT_DIR,
-    YEAR,
-    "Casualties by District",
-    "Number of casualties",
-    "District",
-    f"{YEAR}_GRAPH_casualties_by_district.png",
-    color="green"
-)
+create_bar_chart(casualties_by_district,OUTPUT_DIR,YEAR,"Casualties by District","Number of casualties",
+                 "District",f"{YEAR}_GRAPH_casualties_by_district.png",color="green")
 
 # Load vehicle data for the selected year
 vehicles = pd.read_csv(VEHICLE_CSV)
@@ -483,76 +394,36 @@ print(f"{YEAR} DATA Vehicles loaded")
 collision_vehicle = collisions.merge(vehicles, on="a_ref", how="inner")
 
 # Using GeoPandas to convert vehicle data into spatial points using Easting and Northing from collision dataset
-vehicles_gdf = gpd.GeoDataFrame(
-    collision_vehicle,
-    geometry=gpd.points_from_xy(collision_vehicle["a_gd1"], collision_vehicle["a_gd2"]),
-    crs="EPSG:29901"
-)
+vehicles_gdf = gpd.GeoDataFrame(collision_vehicle,
+                                geometry=gpd.points_from_xy(collision_vehicle["a_gd1"], collision_vehicle["a_gd2"]),
+                                crs="EPSG:29901")
 
 # Spatially join vehicle points to district boundaries
 joined_vehicles = gpd.sjoin(vehicles_gdf, districts, how="inner", predicate="within")
 
 # Create hotspot map for young drivers (17-24)
-create_driver_agegroup_hotspot(
-    joined_vehicles,
-    districts,
-    outline,
-    OUTPUT_DIR,
-    YEAR,
-    agegroup_code=3,
-    agegroup_label="Young 17-24",
-    output_name="young_driver_17_24_hotspot"
-)
+create_driver_agegroup_hotspot(joined_vehicles,districts,outline,OUTPUT_DIR,YEAR,agegroup_code=3,
+                               agegroup_label="Young 17-24",output_name="young_driver_17_24_hotspot")
 
 # Create hotspot map for older drivers (65+)
-create_driver_agegroup_hotspot(
-    joined_vehicles,
-    districts,
-    outline,
-    OUTPUT_DIR,
-    YEAR,
-    agegroup_code=8,
-    agegroup_label="Older 65+",
-    output_name="older_driver_65_plus_hotspot"
-)
+create_driver_agegroup_hotspot(joined_vehicles,districts,outline,OUTPUT_DIR,YEAR,agegroup_code=8,
+                               agegroup_label="Older 65+",output_name="older_driver_65_plus_hotspot")
 
 # Create grouped series for vehicle graph
 vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Create one combined table for collisions, casualties and vehicles
-combined_table = create_combined_district_table(
-    joined,
-    joined_casualties,
-    joined_vehicles,
-    OUTPUT_DIR,
-    YEAR
-)
+combined_table = create_combined_district_table(joined,joined_casualties,joined_vehicles,OUTPUT_DIR,YEAR)
 
 # Create graph for vehicle by district
-create_bar_chart(
-    vehicles_by_district,
-    OUTPUT_DIR,
-    YEAR,
-    "Vehicles by District",
-    "Number of vehicles",
-    "District",
-    f"{YEAR}_GRAPH_vehicles_by_district.png",
-    color="orange"
-)
+create_bar_chart(vehicles_by_district,OUTPUT_DIR,YEAR,"Vehicles by District","Number of vehicles",
+                 "District",f"{YEAR}_GRAPH_vehicles_by_district.png",color="orange")
 
 # Table with districts and columns with severity types
-severity_table = (
-    joined.groupby(["LGDNAME", "a_type"])
-    .size()
-    .unstack(fill_value=0)
-)
+severity_table = (joined.groupby(["LGDNAME", "a_type"]).size().unstack(fill_value=0))
 
 # Rename the severity columns
-severity_table = severity_table.rename(columns={
-    1: "fatal",
-    2: "serious",
-    3: "slight"
-})
+severity_table = severity_table.rename(columns={1: "fatal",2: "serious",3: "slight"})
 
 # If one category is missing
 for col in ["fatal", "serious", "slight"]:
@@ -560,11 +431,7 @@ for col in ["fatal", "serious", "slight"]:
         severity_table[col] = 0
 
 # Add total collisions
-severity_table["total"] = (
-    severity_table["fatal"] +
-    severity_table["serious"] +
-    severity_table["slight"]
-)
+severity_table["total"] = (severity_table["fatal"] +severity_table["serious"] +severity_table["slight"])
 
 # Calculate percentages
 severity_table["fatal_percentage"] = (severity_table["fatal"] / severity_table["total"] * 100).round(2)
@@ -580,15 +447,9 @@ severity_table.to_csv(OUTPUT_DIR / f"{YEAR}_TABLE_severity_by_district.csv")
 print(f"{YEAR} TABLE Severity_by_district.csv created")
 
 # Create bar chart - Collision Severity by District
-severity_table[["fatal", "serious", "slight"]].plot(
-    kind="bar",
-    stacked=True,
-    figsize=(14, 8),
-    color=["red", "orange", "gold"],
-    edgecolor="black",
-    linewidth=0.8,
-    width=0.9
-)
+severity_table[["fatal", "serious", "slight"]].plot(kind="bar",stacked=True,figsize=(14, 8),
+                                                    color=["red", "orange", "gold"],edgecolor="black",
+                                                    linewidth=0.8,width=0.9)
 
 plt.title(f"Collision Severity by District ({YEAR})")
 plt.xlabel("District")
@@ -602,67 +463,35 @@ plt.close()
 print(f"{YEAR} GRAPH Severity by district created")
 
 # Fatal percentage choropleth
-create_choropleth_map(
-    districts,
-    severity_table,
-    outline,
-    OUTPUT_DIR,
-    YEAR,
-    "fatal_percentage",
-    "Fatal collisions (%)",
-    "Percentage of Fatal Collisions by District",
-    "Fatal ÷ Total collisions x 100",
-    f"{YEAR}_MAP_fatal_percentage_choropleth.png",
-    "Reds"
-)
+create_choropleth_map(districts,severity_table,outline,OUTPUT_DIR,YEAR,"fatal_percentage",
+                      "Fatal collisions (%)","Percentage of Fatal Collisions by District",
+                      "Fatal ÷ Total collisions x 100",
+                      f"{YEAR}_MAP_fatal_percentage_choropleth.png","Reds")
+
 print(f"{YEAR} MAP fatal_percentage_choropleth created")
 
 # Serious percentage choropleth
-create_choropleth_map(
-    districts,
-    severity_table,
-    outline,
-    OUTPUT_DIR,
-    YEAR,
-    "serious_percentage",
-    "Serious collisions (%)",
-    "Percentage of Serious Collisions by District",
-    "Serious ÷ Total collisions x 100",
-    f"{YEAR}_MAP_serious_percentage_choropleth.png",
-    "Wistia"
-)
+create_choropleth_map(districts,severity_table,outline,OUTPUT_DIR,YEAR,"serious_percentage",
+                      "Serious collisions (%)","Percentage of Serious Collisions by District",
+                      "Serious ÷ Total collisions x 100",
+                      f"{YEAR}_MAP_serious_percentage_choropleth.png","Wistia")
+
 print(f"{YEAR} MAP serious_percentage_choropleth created")
 
 # Slight percentage choropleth
-create_choropleth_map(
-    districts,
-    severity_table,
-    outline,
-    OUTPUT_DIR,
-    YEAR,
-    "slight_percentage",
-    "Slight collisions (%)",
-    "Percentage of Slight Collisions by District",
-    "Slight ÷ Total collisions x 100",
-    f"{YEAR}_MAP_slight_percentage_choropleth.png",
-    "YlGn"
-)
+create_choropleth_map(districts,severity_table,outline,OUTPUT_DIR,YEAR,"slight_percentage",
+                      "Slight collisions (%)","Percentage of Slight Collisions by District",
+                      "Slight ÷ Total collisions x 100",
+                      f"{YEAR}_MAP_slight_percentage_choropleth.png","YlGn")
+
 print(f"{YEAR} MAP slight_percentage_choropleth created")
 
 # Serious-to-slight ratio choropleth
-create_choropleth_map(
-    districts,
-    severity_table,
-    outline,
-    OUTPUT_DIR,
-    YEAR,
-    "serious_to_slight_ratio",
-    "Serious to slight ratio",
-    "Serious-to-Slight Collision Ratio by District",
-    "Serious collisions ÷ Slight collisions",
-    f"{YEAR}_MAP_serious_to_slight_ratio_choropleth.png",
-    "Purples"
-)
+create_choropleth_map(districts,severity_table,outline,OUTPUT_DIR,YEAR,"serious_to_slight_ratio",
+                      "Serious to slight ratio","Serious-to-Slight Collision Ratio by District",
+                      "Serious collisions ÷ Slight collisions",
+                      f"{YEAR}_MAP_serious_to_slight_ratio_choropleth.png","Purples")
+
 print(f"{YEAR} MAP serious_to_slight_ratio_choropleth created")
 
 # End of script
