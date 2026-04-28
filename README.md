@@ -18,7 +18,7 @@ With the relevant collision data saved in the **data** folder,
 simply change the year at the top of the script and all results 
 will be automatically saved for that selected year in the **outputs** folder.
 
-## Data Download
+## Data Download (2025)
 
 Go to the Open Data NI website:
 
@@ -43,7 +43,7 @@ https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-loc
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 
-Place full shapefile set in the **data** folder and rename the main .sph files as:
+Place full shapefile set in the **data** folder and rename the main .shp files as:
 
 - ni_outline.shp
 - ni_districts.shp
