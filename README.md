@@ -18,6 +18,10 @@ With the relevant collision data saved in the **data** folder,
 simply change the year at the top of the script and all results 
 will be automatically saved for that selected year in the **outputs** folder.
 
+## Main Python Libraries
+
+pandas, geopandas, matplotlib
+
 ## Data Download (2025)
 
 Go to the Open Data NI website:
@@ -63,7 +67,7 @@ git clone https://github.com/MartinCervenka00/ni-traffic-collision-analysis.git
 cd ni-traffic-collision-analysis 
 ```
 ## Environment
-A conda environment is used to help that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided environment.yml file:
+A conda environment is used to help ensure that all required dependencies are installed and that the code can be reproduced. The environment can be created using the provided `environment.yml` file:
 
 ```bash
 conda env create -f environment.yml

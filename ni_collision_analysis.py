@@ -368,7 +368,7 @@ collisions = pd.read_csv(COLLISION_CSV)
 
 print(f"{YEAR} DATA Collision loaded")
 
-# Creating collision points location using Easting (a_gd1) and Northing a_gd2)
+# Creating collision point locations using Easting (a_gd1) and Northing a_gd2)
 # CRS: TM65 Irish Grid (EPSG = 29901)
 collisions_gdf = gpd.GeoDataFrame(
     collisions,
