@@ -347,6 +347,8 @@ def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_d
     ax.set_title(f"{agegroup_label} Driver Collision Hotspot ({year})")
     ax.tick_params(axis="both", labelsize=8)
 
+    plt.grid(axis="both", linestyle="--", alpha=0.4)
+
     add_map_elements(ax)
 
     plt.tight_layout()
