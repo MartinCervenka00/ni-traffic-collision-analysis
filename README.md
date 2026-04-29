@@ -15,12 +15,8 @@ The script:
 The script can be used for any available year from **2013** to **2025**.
 
 With the relevant collision data saved in the **data** folder, 
-simply change the year at the top of the script and all results 
+simply change the `YEAR` at the top of the script and all results 
 will be automatically saved for that selected year in the **outputs** folder.
-
-## Main Python Libraries
-
-pandas, geopandas, matplotlib
 
 ## Data Download (2025)
 
@@ -47,10 +43,14 @@ https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-loc
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 
-Place full shapefile set in the **data** folder and rename the main .shp files as:
+Place full shapefile set in the `data` folder and rename the main .shp files as:
 
 - ni_outline.shp
 - ni_districts.shp
+
+## Main Python Libraries
+
+pandas, geopandas, matplotlib
 
 ## Installation
 
@@ -173,6 +173,9 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
   - `a_gd1` = Easting
   - `a_gd2` = Northing
 
+## Licence
+
+MIT Licence
 
 ## Author
 

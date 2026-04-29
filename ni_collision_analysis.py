@@ -35,7 +35,7 @@ COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
 
 # Creating function to add north arrow, scale bar and source text to maps
 def add_map_elements(ax,
-                     source_text="Source: PSNI Road Traffic Collision Statistics, Open Data NI; OSNI Boundaries",
+                     source_text="© PSNI Road Traffic Collision Statistics, OSNI Boundaries. OGL v3.0",
                      scale_length=20000):
 
     """
