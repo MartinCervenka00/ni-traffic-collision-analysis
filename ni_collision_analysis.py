@@ -34,7 +34,7 @@ def get_year_file_paths(data_dir, year):
 COLLISION_CSV, CASUALTY_CSV, VEHICLE_CSV = get_year_file_paths(DATA_DIR, YEAR)
 
 # Creating function to add north arrow, scale bar and source text to maps
-def add_map_elements(ax,
+def add_map_elements(ax, show_grid=True,
                      source_text="© PSNI Road Traffic Collision Statistics, OSNI Boundaries. OGL v3.0",
                      scale_length=20000):
 
@@ -43,12 +43,15 @@ def add_map_elements(ax,
 
     Parameters:
     - ax: matplotlib axis
+    - show_grid: show the grid (True) or not (False)
     - source_text: text shown at bottom of figure
     - scale_length: scale bar length in metres (EPSG:29901 uses metres)
 
     Returns:
     - None. Adds map elements directly to the matplotlib axis (add_map_elements(ax))
     """
+    # Gridlines
+    if show_grid: ax.grid(True, linestyle=":", alpha=0.4, color="grey", linewidth=0.4), ax.set_axisbelow(False)
 
     # North arrow
     ax.annotate("N",xy=(0.93, 0.93),xytext=(0.93, 0.85),arrowprops=dict(facecolor="black",width=2,headwidth=8),
@@ -76,7 +79,7 @@ def add_map_elements(ax,
             f"{int(scale_length / 1000)} km", ha="center", fontsize=9)
 
     # Source text
-    plt.figtext(0.10,0.02,source_text,fontsize=8)
+    plt.figtext(0.50,0.02,source_text,ha="center", va="bottom",fontsize=8)
 
 # Adding boundary legend to the hotspot and choropleth maps
 def add_boundary_legend(ax, outline_label="NI Outline", district_label="District Boundaries"):
@@ -151,9 +154,6 @@ def create_choropleth_map(districts, severity_table, outline, output_dir, year,
     # Axis styling
     ax.tick_params(axis="both", labelsize=8)
 
-    # Add dashed gridlines
-    plt.grid(axis="both", linestyle="--", alpha=0.4)
-
     # Add north arrow, source, scale
     add_map_elements(ax)
 
@@ -225,7 +225,6 @@ def create_bar_chart(series, output_dir, year,title, xlabel, ylabel,output_filen
     plt.title(f"{title} ({year})")
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.grid(axis="x", linestyle="--", alpha=0.7)
     plt.tight_layout()
 
     plt.savefig(output_dir / output_filename, dpi=300)
@@ -272,8 +271,6 @@ def create_driver_agegroup_hotspot(joined_vehicles, districts, outline, output_d
 
     ax.set_title(f"{agegroup_label} Driver Collision Hotspot ({year})")
     ax.tick_params(axis="both", labelsize=8)
-
-    plt.grid(axis="both", linestyle="--", alpha=0.4)
 
     add_map_elements(ax)
 
@@ -332,9 +329,6 @@ ax.legend(handles=[outline_patch, district_patch, fatal_patch, serious_patch, sl
 
 # Make coordinate numbers smaller
 ax.tick_params(axis="both", labelsize=8)
-
-# Add dashed gridlines
-plt.grid(axis="both", linestyle="--", alpha=0.4)
 
 # Adding north arrow, scale and source
 add_map_elements(ax)
@@ -453,7 +447,6 @@ plt.title(f"Collision Severity by District ({YEAR})")
 plt.xlabel("District")
 plt.ylabel("Number of collisions")
 plt.legend(title="Severity")
-plt.grid(axis="y", linestyle="--", alpha=0.7)
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / f"{YEAR}_GRAPH_severity_by_district.png", dpi=300)
 plt.close()
