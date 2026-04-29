@@ -78,7 +78,7 @@ def add_map_elements(ax,
     # Source text
     plt.figtext(0.10,0.02,source_text,fontsize=8)
 
-## Adding boundary legend to the hotspot and choropleth maps
+# Adding boundary legend to the hotspot and choropleth maps
 def add_boundary_legend(ax, outline_label="NI Outline", district_label="District Boundaries"):
     """
     Add a boundary legend showing the NI outline and district boundaries.
@@ -183,16 +183,13 @@ def create_combined_district_table(collisions_joined, casualties_joined,
     collisions_count = (collisions_joined.groupby("LGDNAME").size().rename("collision_count"))
     casualties_count = (casualties_joined.groupby("LGDNAME").size().rename("casualties_count"))
     vehicles_count = (vehicles_joined.groupby("LGDNAME").size().rename("vehicles_count"))
-    combined_table = pd.concat([collisions_count, casualties_count, vehicles_count],
-                               axis=1).fillna(0)
+    combined_table = pd.concat([collisions_count, casualties_count, vehicles_count],axis=1).fillna(0)
     combined_table = combined_table.astype(int)
     combined_table = combined_table.sort_values("collision_count",ascending=False)
 
-    total_row = pd.DataFrame({
-        "collision_count": [combined_table["collision_count"].sum()],
-        "casualties_count": [combined_table["casualties_count"].sum()],
-        "vehicles_count": [combined_table["vehicles_count"].sum()]
-    }, index=["TOTAL"])
+    total_row = pd.DataFrame({"collision_count": [combined_table["collision_count"].sum()],
+                              "casualties_count": [combined_table["casualties_count"].sum()],
+                              "vehicles_count": [combined_table["vehicles_count"].sum()]}, index=["TOTAL"])
 
     combined_table = pd.concat([combined_table, total_row])
 
@@ -203,9 +200,7 @@ def create_combined_district_table(collisions_joined, casualties_joined,
     return combined_table
 
 # Create function for bar charts
-def create_bar_chart(series, output_dir, year,
-                     title, xlabel, ylabel,
-                     output_filename, color=None):
+def create_bar_chart(series, output_dir, year,title, xlabel, ylabel,output_filename, color=None):
     """
     Create and save a horizontal bar chart from a pandas Series.
 
@@ -356,7 +351,7 @@ plt.close()
 print(f"{YEAR} MAP total collisions in NI created")
 
 # Creating spatial join - connect collisions to districts
-joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="intersects")
+joined = gpd.sjoin(collisions_gdf, districts, how="inner", predicate="within")
 
 # Create grouped series for collision graph
 by_district = joined.groupby("LGDNAME").size().sort_values(ascending=False)
@@ -385,7 +380,7 @@ joined_casualties = gpd.sjoin(casualties_gdf, districts, how="inner", predicate=
 casualties_by_district = joined_casualties.groupby("LGDNAME").size().sort_values(ascending=False)
 
 # Creating casualties graph
-create_bar_chart(casualties_by_district,OUTPUT_DIR,YEAR,"Casualties by District","Number of casualties",
+create_bar_chart(casualties_by_district,OUTPUT_DIR,YEAR,"Number of casualties by District","Number of casualties",
                  "District",f"{YEAR}_GRAPH_casualties_by_district.png",color="green")
 
 # Load vehicle data for the selected year
@@ -419,7 +414,7 @@ vehicles_by_district = joined_vehicles.groupby("LGDNAME").size().sort_values(asc
 combined_table = create_combined_district_table(joined,joined_casualties,joined_vehicles,OUTPUT_DIR,YEAR)
 
 # Create graph for vehicle by district
-create_bar_chart(vehicles_by_district,OUTPUT_DIR,YEAR,"Vehicles by District","Number of vehicles",
+create_bar_chart(vehicles_by_district,OUTPUT_DIR,YEAR,"Number of vehicles by District","Number of vehicles",
                  "District",f"{YEAR}_GRAPH_vehicles_by_district.png",color="orange")
 
 # Table with districts and columns with severity types

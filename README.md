@@ -88,7 +88,7 @@ conda activate ni-collisions
 ```python
 YEAR = 2025
 ```
-7. Click the **Run** button in the top-right corner of PyCharm.
+7. Click the **Run** button in your Python IDE
 8. If successful, the terminal should show:
 
 ```text
