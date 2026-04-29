@@ -14,13 +14,13 @@ The script:
 
 The script can be used for any available year from **2013** to **2025**.
 
-With the relevant collision data saved in the **data** folder, 
+With the relevant collision data saved in the `data` folder, 
 simply change the `YEAR` at the top of the script and all results 
-will be automatically saved for that selected year in the **outputs** folder.
+will be automatically saved for that selected year in the `outputs` folder.
 
 ## Data Download (2025)
 
-Go to the Open Data NI website:
+Go to the Open Data NI website ([© PSNI - OGL v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/))
 
 https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2025
 
@@ -37,7 +37,7 @@ To use another year, change the year at the end of the website address.
 
 ## Boundary Files
 
-Go to the Open Data NI website and download these shapefiles:
+Go to the Open Data NI website and download these shapefiles ([© OSNI - OGL v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)):
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-local-government-districts-2012
 
