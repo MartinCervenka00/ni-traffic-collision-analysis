@@ -446,7 +446,7 @@ print(f"{YEAR} TABLE Severity_by_district.csv created")
 
 # Create bar chart - Collision Severity by District
 severity_table[["fatal", "serious", "slight"]].plot(kind="bar",stacked=True,figsize=(14, 8),
-                                                    color=["red", "orange", "gold"],edgecolor="black",
+                                                    color=["red", "orange", "yellowgreen"],edgecolor="black",
                                                     linewidth=0.8,width=0.9)
 
 plt.title(f"Collision Severity by District ({YEAR})")
