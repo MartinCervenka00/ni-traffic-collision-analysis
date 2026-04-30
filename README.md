@@ -15,8 +15,8 @@ The script:
 The script can be used for any available year from **2013** to **2025**. 
 
 With the relevant collision data saved in the `data` folder (currently 2023-2025), 
-simply change the `YEAR` at the top of the script and all results 
-will be automatically saved for that selected year in the `outputs` folder.
+simply change the `YEAR` parameter at the top of the script and all results 
+will be automatically saved in the `outputs` folder.
 
 ## Data
 
@@ -27,7 +27,7 @@ PSNI and OSNI datasets are distributed under the [Open Government Licence v3.0](
 
 ### PSNI Collision Data 
 
-Data for years 2023-2025 are included in the `data` folder. To use another year (from 2013), change the year at the end of the website address:
+Data for years 2023-2025 are included in the `data` folder. To use another year (available from 2013 onwards), change the year in the dataset URL below:
 
 https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2025
 
@@ -58,7 +58,7 @@ pandas, geopandas, matplotlib
 
 ## Installation
 
-By clicking the green **Code** button on the top of this page, three options are available:
+Click the green **Code** button on the top of this page, three options are available:
 
 1. Select **Download ZIP** to save the files to your computer and run it in an IDE, such as **PyCharm**
 2. Select **Open with GitHub Desktop** - choose the local folder where the repository will be saved, and the project will be cloned automatically. 
