@@ -50,7 +50,7 @@ https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 The following shapefiles set are provided in the `data` folder:
 
 - `ni_outline.shp` - NI outline
-- `ni_districts.`shp` - Local Government District boundaries (11 districts)
+- `ni_districts.shp` - Local Government District boundaries (11 districts)
 
 ## Main Python Libraries
 
