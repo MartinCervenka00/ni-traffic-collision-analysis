@@ -181,6 +181,10 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 
 MIT Licence
 
+Data sources:
+- © Police Service of Northern Ireland (PSNI) – Open Government Licence v3.0  
+- © Ordnance Survey of Northern Ireland (OSNI) – Open Government Licence v3.0  
+
 ## Author
 
 Martin Cervenka, Ulster University,
