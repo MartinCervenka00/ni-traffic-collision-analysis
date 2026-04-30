@@ -5,48 +5,52 @@
 This project analyses police-recorded injury road traffic collisions in Northern Ireland.
 
 The script:
-- loads collision, casualty and vehicle CSV files
+- loads collision, casualty and vehicle datasets (CSV format)
 - creates spatial point data from collision coordinates
 - loads Northern Ireland outline and district boundary shapefiles
 - spatially joins collision data to district boundaries
 - creates maps, charts and summary tables
 - saves outputs as CSV and PNG files
 
-The script can be used for any available year from **2013** to **2025**.
+The script can be used for any available year from **2013** to **2025**. 
 
-With the relevant collision data saved in the `data` folder, 
+With the relevant collision data saved in the `data` folder (currently 2023-2025), 
 simply change the `YEAR` at the top of the script and all results 
 will be automatically saved for that selected year in the `outputs` folder.
 
-## Data Download (2025)
+## Data
 
-Go to the Open Data NI website ([© PSNI - OGL v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/))
+All data required to run this project are already included in the repository within the `data` folder.  
+**No external data downloads are performed during execution.** The analysis can be fully reproduced by simply cloning or forking the repository.
+
+PSNI and OSNI datasets are distributed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
+
+### PSNI Collision Data 
+
+Data for years 2023-2025 are included in the `data` folder. To use another year (from 2013), change the year at the end of the website address:
 
 https://admin.opendatani.gov.uk/dataset/police-recorded-injury-road-traffic-collision-statistics-northern-ireland-2025
 
-Download these three CSV files:
+and download these three CSV files:
 
-- collision2025.csv 
-- casualty2025.csv
-- vehicle2025.csv
+- collisionYYYY.csv 
+- casualtyYYYY.csv
+- vehicleYYYY.csv
 
-Save all downloaded CSV files inside the project **data** folder.
+Save all downloaded CSV files inside the project **data** folder. To run the scrip only change this year at the top of the script. 
 
-To use another year, change the year at the end of the website address.
+### OSNI Boundary Files
 
-
-## Boundary Files
-
-Go to the Open Data NI website and download these shapefiles ([© OSNI - OGL v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)):
+Administrative boundary data are also included in the repository to support spatial analysis. These datasets were sourced from Open Data NI:
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-local-government-districts-2012
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 
-Place full shapefile set in the `data` folder and rename the main .shp files as:
+The following shapefiles set are provided in the `data` folder:
 
-- ni_outline.shp
-- ni_districts.shp
+- `ni_outline.shp` - NI outline
+- `ni_districts.`shp` - Local Government District boundaries (11 districts)
 
 ## Main Python Libraries
 
@@ -120,11 +124,11 @@ Results are saved in the **outputs** folder as PNG charts/maps and CSV summary t
 ### Collision Locations
 ![Collision Locations](outputs/2025_MAP_collisions.png)
 
-### Casualties by District
-![Casualties by District](outputs/2025_GRAPH_casualties_by_district.png)
-
 ### Collisions by District
 ![Collisions by District](outputs/2025_GRAPH_collisions_by_district.png)
+
+### Casualties by District
+![Casualties by District](outputs/2025_GRAPH_casualties_by_district.png)
 
 ### Vehicles by District
 ![Vehicles by District](outputs/2025_GRAPH_vehicles_by_district.png)
