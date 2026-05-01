@@ -37,7 +37,7 @@ and download these three CSV files:
 - casualtyYYYY.csv
 - vehicleYYYY.csv
 
-Save all downloaded CSV files inside the project **data** folder. To run the scrip, only change the year at the top of the script. 
+Save all downloaded CSV files inside the project **data** folder. To run the script, only change the year at the top of the script. 
 
 ### OSNI Boundary Files
 
@@ -187,5 +187,6 @@ Data sources:
 
 ## Author
 
-Martin Cervenka, Ulster University,
-Created for the EGM 722 Programming for GIS and Remote Sensing module
+Martin Cervenka
+- Ulster University,
+- Created for the EGM 722 Programming for GIS and Remote Sensing module

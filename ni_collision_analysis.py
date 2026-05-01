@@ -51,7 +51,9 @@ def add_map_elements(ax, show_grid=True,
     - None. Adds map elements directly to the matplotlib axis (add_map_elements(ax))
     """
     # Gridlines
-    if show_grid: ax.grid(True, linestyle=":", alpha=0.4, color="grey", linewidth=0.4), ax.set_axisbelow(False)
+    if show_grid:
+        (ax.grid(True, linestyle=":", alpha=0.4, color="grey", linewidth=0.4),
+         ax.set_axisbelow(False))
 
     # North arrow
     ax.annotate("N",xy=(0.93, 0.93),xytext=(0.93, 0.85),arrowprops=dict(facecolor="black",width=2,headwidth=8),
