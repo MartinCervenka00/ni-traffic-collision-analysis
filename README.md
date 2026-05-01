@@ -12,7 +12,7 @@ The script:
 - creates maps, charts and summary tables
 - saves outputs as CSV and PNG files
 
-The script can be used for any available year from **2013** to **2025**. 
+The script can be used for any year from **2013** to **2025**. 
 
 With the relevant collision data saved in the `data` folder (currently 2023-2025), 
 simply change the `YEAR` parameter at the top of the script and all results 
@@ -37,7 +37,7 @@ and download these three CSV files:
 - casualtyYYYY.csv
 - vehicleYYYY.csv
 
-Save all downloaded CSV files inside the project **data** folder. To run the scrip only change this year at the top of the script. 
+Save all downloaded CSV files inside the project **data** folder. To run the scrip, only change the year at the top of the script. 
 
 ### OSNI Boundary Files
 
@@ -47,7 +47,7 @@ https://admin.opendatani.gov.uk/dataset/osni-open-data-largescale-boundaries-loc
 
 https://admin.opendatani.gov.uk/dataset/osni-open-data-50k-boundaries-ni-outline
 
-The following shapefiles set are provided in the `data` folder:
+The following shapefile sets are provided in the `data` folder:
 
 - `ni_outline.shp` - NI outline
 - `ni_districts.shp` - Local Government District boundaries (11 districts)
