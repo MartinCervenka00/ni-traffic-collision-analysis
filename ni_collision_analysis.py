@@ -4,7 +4,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-# Select year for your analysis
+# Select the year for your analysis
 YEAR = 2025
 
 # Create file paths and ensure the outputs folder exists
